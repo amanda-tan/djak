@@ -1,0 +1,603 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>LiveOcean Server notes</title>
+</head>
+<body>
+    <pre>
+
+
+ ////////////////////
+ //
+ // Zeroth Thngs Zeroth: General information START HERE!!!
+ //
+ ////////////////////
+
+        Welcome to Live Ocean Server README. There is a lot here so sit back, relax, get some coffee or your favorite beverage and
+        get ready to read through this document. (If you tried to load this software and got errors concerning python: We have you 
+        covered. Just scroll down to "First things First" and do the python installs.)
+
+        This file goes over the basics of Live Ocean as if you don't know or remember what this code is about. 
+        It then proceeds to delve into details; so if Everything you need to know is here: Good. If not: Add it! 
+
+        //
+        // Overview with FAQ
+        //
+
+        This software was developed as a collaboration between UW (Parker MacCready) and Microsoft Research (Rob Fatland and Nels Oscar). 
+        It is part of a project to provide ocean state forecasts. The project is called "Live Ocean" and it work in principle as follows:
+        Every day on Parker's machines a Regional Ocean Modeling System (ROMS) simulation runs to produce a forecast. This run includes a
+        considerable amount of assembling initial and boundary conditions and this in turn involves bringing together data from a variety
+        of external sources. The ROMS model produces some number of Gigabytes of hourly results files. The area covered is the continental 
+        shelf west of Washington State and the northern half of Oregon State. It extends as well into the Strait of Juan de Fuca, the Strait 
+        of Georgia and Puget Sound. Once it runs those output files are sent to Microsoft Azure Binary Large OBject (BLOB) storage. Here
+        they become the key resource for providing End Users with forecast information. Also in Azure a sofware ensemble "sits in wait". 
+        This software is called Live Ocean Server. It is most readily viewed in Visual Studio, it is written primarily in the python 
+        programming language, and it is listening for API traffic that would arrive from the internet (not from Parker's ROMS system). 
+
+        At this point we have established a 24-hour refresh of 3 days of forecast, a transfer of results to the cloud, and a Server (Live 
+        Ocean Server) that is the custodian of that data waiting for API traffic. This begs the question "Where does the API traffic come from?"
+        If you are like me (Rob, sometimes "Kilroy" (see below)) you think of the web as a land of http web locations or URLs. If I want to
+        go to youtube I type in http://youtube.com. And so on. But the observant person will soon notice that there are often many characters
+        appended to a URL that seem to refine the experience or modify what is going on; for example https://www.youtube.com/watch?v=npjOSLCR2hE. 
+        What does this mean? To parse that string a little bit: It means that we can append a sort of "command" term on the end of the base
+        URL (in the above example it is "watch") and we can then follow that with a question mark and some very specific text that gives 
+        further detail. 
+
+        The Live Ocean Server API works in this way; but unlike YouTube the Live Ocean Server is not a web site intended for Live Ocean End
+        Users; so let's take a moment to define what we mean by End User. 
+
+        If you happen to grow oysters in Willapa Bay in southwest Washington State you might be very interested in a forecast of ocean pH for
+        the next three days. If the acidity will be low it might be a good time to seed your baby oysters on your growing nets. If the acidity 
+        will be high then you could lose a lot of money seeding those baby oysters because their shells will be damaged. You will lose the crop.
+        So you are a Live Ocean End User. You would like to have a tool -- let's suppose it is a website or a smart phone app -- that tells you
+        what the Live Ocean forecast is. This app might be different if you are a fisherman looking for the best place to set your nets. In fact
+        each "vested interest" in the state of the ocean could represent a different part of the maritime commercial fishery off of Washington
+        State, and they could be interested in different aspects of the forecast. Hence we want to keep open the possibility of multiple 
+        apps. In this code we often use the term Client to mean End User Application. They are essentially synonymous. But there is an important
+        distinction to make in the form of a Client: Some Clients run in a browser like Internet Explorer or Safari. Others run as standalone
+        applications. There are advantages to each; but again the key concept here is flexibility to support different types of End Users.  
+
+        The stage is now set to complete this description of Live Ocean. On the one hand the Live Ocean Server provides an API that supports
+        a handful of (literally five) commands. These include commands to get data, get images of data, get information about what data are
+        available and so forth. We imagine that a company exists that builds custom Clients for End Users providing Live Ocean forecast data, 
+        possibly in combination with other forecast data such as weather and sea state. This is the Live Ocean design concept nearly in its
+        entirety (skipping some operational details). The system uses an automated model calculation as the basis for the forecast; it provides 
+        a simple set of rules for accessing forecast information; and then some mechanism (Clients / Apps) is built for connecting that data 
+        source to End Users. With that in mind we now conclude this overview by means of some Frequently Asked Question-style details.
+
+        FAQ
+        What do you mean by the term 'Client'? 
+            A Client is a piece of software running on some platform -- say a smart phone or a tablet or
+            on a PC or in a browser that relays to a Consumer some of the forecast information from Live Ocean. In this sense Client is a 
+            refinement or variation of the term 'App': You can say a Client is an App that is oriented towards Live Ocean as its information feed. 
+        Is the forecast accurate? 
+            This is a validation exercise that will follow the initial steps to automate the forecast. 
+        Is there a website? 
+            Technically no. We "farm out" the task of building the website to "another effort by other people". But to get 
+            things rolling we *are* those other people. In fact we pretend to work for a fictional company called Yoyodyne. The reason for
+            this seemingly arbitrary distinction is made clear below in the essay on Modularity.
+        Is the forecast computationally intensive? 
+            Yes: It runs for about an hour on a high performance cluster of 100 or more machines.
+        Is there a role for the Microsoft Azure cloud solution? 
+            Yes: It behaves as middleware that registers the arrival of a new forecast
+            and translates that into ready-to-consume information that is externally available through an Applications Programming Interface (API).
+        What does Live Ocean forecast? 
+            Temperature, currents, ocean acidity, dissolved oxygen, salinity, water density, and a host of 
+            additional parameters related to nutrients and microbial ecology: Nitrate concentration, phytoplankton, zooplankton and the like.
+        Where does Live Ocean forecast? 
+            From the surface down to the seabed for the region of interest; in layers that are indexed but which are
+            not isobaths. That is: There are 40 layers everywhere and they parse the water column in the same proportionality everywhere. Since
+            the depth of the ocean varies, these layers have varying thickness. To avoid having to think about this, however: The API provides 
+            data based on physical depth in (negative) meters so that the forecast consumer never need worry about depth layers. Just depths.
+        When does Live Ocean forecast? 
+            From today through three days, i.e. today, tomorrow and the day after tomorrow. Notice that this creates
+            a backlog of forecasts that behave as a time-series record of predictions. Today's forecast uses as its initial conditions the
+            forecast from yesterday. More explicitly: Monday's forecast is for Monday Tuesday and Wednesday and it uses some initial conditions
+            and information on ocean, river and atmospheric conditions provided by external agencies. Tuesday's forecast is for Tuesday Wednesday
+            and Thursday and it uses as initial conditions the Monday forecast for Monday. 
+        How is the cloud involved? 
+            Live Ocean Server is the code base for the Azure middleware. This middleware performs two basic functions:
+            It acknowledges and "translates" forecast data via the API; and it provides administrative controls of system configuration.
+        Does Live Ocean know about oceans? 
+            This is a loaded question... of course the answer is "Yes" but in the sense of flexible software
+            design we would like Live Ocean Server to be adaptable to other applications. Towards this end we create a table of data products 
+            in the Azure cloud (see Azure tables) that is populated in a bootstrapping manner from a forecast data file. That is: The forecast
+            data describes its own content in terms of four-dimensional scalar fields: Temperature, salinity, nitrate concentration and so on. 
+            So when we populate the "Views" Azure table we simply read in all scalar field names and use them. We do not presuppose that the
+            forecast files contain information on salinity, but rather infer that by simply reading one of the files. In this way if the same
+            code were to be used for a soil carbon forecast system it would infer from *that* data that parameters of interest were (perhaps)
+            inorganic carbon and humic matter concentration. 
+        Must Live Ocean Server run entirely in the Azure cloud? 
+            No. You can cause Live Ocean Server to run on a laptop; and you can make Live Ocean
+            Clients (separate Solution) run from a laptop as well. This is convenient for speeding up development; and then we "deploy" the 
+            solution to the cloud for extended operation.
+        Does all of Live Ocean work in the cloud?
+            No. The forecast is itself running on a high performance cluster (HPC) at the University of Washington. That said: Another 
+            application could run entirely in the cloud. The important end-point for the forecast data is in the cloud; so there is a 
+            "push the results to the cloud" step involved in making the forecast available (from the cloud).
+        Is Cloud Memory stable? 
+            Yes and no. Blob storage is very stable and Azure Tables are very stable. Azure Web Server instances have 
+            intrinsic memory (a file system) that can be bleeped out of existence when the machine goes down. This might happen once every 
+            couple days; at which time the machine will be reconstituted in its native state but with any accumulated memory erased. Therefore
+            it behooves us to make use of blob storage to cache results so that they remain stable.
+        Is the Live Ocean Server running on a Linux Virtual Machine? 
+            No; it is running on a Windows Server.
+
+        // 
+        // Modularity
+        //
+        // This is a short essay on the Live Ocean Server design philosophy.
+        //
+
+        There are essentially two reasons for the Live Ocean modular design: Scale and reliability. 
+        
+        Scale
+        To accommodate a large number of End Users we anticipate needing a set of Clients. We imagine that a shellfish farming
+        community will like one type of Client, the fishing community will like another type; and then we can imagine End Users
+        from state and federal agencies concerned with natural resource management, from the military, from educators, from 
+        tourism concerns, and so forth. Just one specific example: If Live Ocean can reliably predict Harmful Algal Blooms (HABs) 
+        then shoreline management agencies could have a jump on when hazardous beach conditions might arise. To keep pace with the
+        scaling problem here we provide an API rather than a one-website-fits-all interface to the Live Ocean forecast.  
+        
+        Reliability
+        The Live Ocean ROMS model should be concerned with its own reliability; but not the reliability of new code intended
+        to support the Live Ocean End User. That is, the ROMS code base has enough to do creating a forecast and therefore it should not 
+        be "expanded" to include web site functionality or translation of output to different file formats. Making the code base more ambitious
+        in a monolithic way introduces many opportunities for bugs to appear. In contrast a modular approach with clearly delinieated 
+        boundaries between functionality will confine bugs; making them easier to fix and thereby making the system more reliable.
+        
+        Given the modularity mandate the question becomes where to draw the boundaries. The two natural points we have identified are
+        between the ROMS model and the Live Ocean Server middleware, and then again between the Live Ocean Server API and a Client. We imagine
+        that the Client is provided for the shellfish grower by the oyster nets or a fisherman steaming out of Grays Harbor. Hence
+        Live Ocean Server lives between the Model and the Deep Blue Sea.
+
+        //
+        // What Kilroy Means
+        //
+
+        One of us (Rob) started using Kilroy as a search string. Anywhere Kilroy is found in the code there was a
+        problem or issue that deserves attention. It might be a stub for future improvement; it might be something
+        inefficient; it might be a detail that will be important but easy to miss for someone coming to the code after
+        a hiatus or for the first time. 
+
+        Related: In the case where there is positively a PROBLEM with the code that will lead to failure we flag
+        with the term Cassandra. 
+ 
+
+        //
+        // Code Anatomy and Physiology
+        //  
+
+        This section describes what code lives where, briefly.
+
+        LiveOceanServer is a Solution that includes two Projects: LiveOceanCacheMonitor and LiveOceanServer
+            README.html is standalone text, this!
+            LiveOceanCacheMonitor is a Project that is currently only a stub.
+                LOCM runs as an independent agent on a Live Ocean Server host machine and it is intended to do
+                both housekeeping (getting rid of old stuff) and pre-building content to make a Client load faster.
+                LOCM has a Virtual Python Environment but this seems to be flagged with a warning ! triangle.
+                    (Kilroy; 2-12-2014) 
+            LiveOceanServer (all one word) is the second Project in the LiveOceanServer Solution
+                This project runs on a Localhost or in Azure and provides the Live Ocean API.
+                LiveOceanServer is built on the Django framework.
+                Python Environments is an extensive virtual "env (Python 2.7)" Python environment
+                    Among others this includes "pyproj" with geospatial projection capabilities for maps
+                    Also 'pip' which is apparently an installer
+                
+
+        //
+        // TACTICS
+        //
+        // Everything from here down begins to delve into the complexities and details of operating Live Ocean Server
+        //
+
+        Bear in mind the distinction: "Live Ocean" is a research project at the University of Washington under Parker MacCready and
+          "Live Ocean Server" is a sofware solution that runs either on a PC or in the Azure cloud that behaves as part of a forecast
+          system.
+
+        // Key concepts and open issues
+
+        This section flags "important things we know" and open issues.
+        Admonitions are flagged by !!!ADMONITION!!!
+
+
+        AZURE
+            The dashboard is at http://manage.windowsazure.com
+            !!!ADMONITION!!! Do not get an educational trial license version of a bing maps account: They expire in 90 days.
+            Blob Storage Accounts
+                - Parker has one that has a slightly obscure name that we forget (py...???); but this is currently not in use
+                - Nels has lafayette (.blob.core.windows.net) where the "100" NetCDF files reside, as if Parker had put them there.
+                    The ops test works against lafayette and LOS uses Lafayette for the API query results cache. (This will be generalized.)
+                - Rob has 'erdos'; not yet in use. Public Container and Public Blob are the same thing except anybody can see the Container metadata 
+                    in the former case. There is one container here called 'euler'.
+                - Rob has 'euler' and needs to sort out his Live versus Work accounts to land it in Azure ML space
+            Looking at Guts in Azure 
+                !!!ADMONITION!!! Azure Storage Explorer breaks when you use JSON description as png names
+            File Transfer
+                There is a big latency unless file transfer can be parallelized
+                This works for Parker by virtue of his hourly time divisions; so each NetCDF file (200MB) is fetched as its own thread.
+                Anthony: Daily blocks
+                Nels states: Asynchronous blob publication: tool or python library
+            Publishing Solutions
+                - LOS publishes as code that runs on the Server: IIS consults Django on what to do, so to speak
+                - LO publishes as files (not code) that are dealt out by IIS
+
+        SOLUTIONS
+            LOS = Live Ocean Server (the API)
+            LO = LiveOcean (Yoyodyne's collection of Clients)
+            Ice2Ocean is the Ice To Ocean solution containing both:
+                Ice2Ocean: LOS adapted to Anthony's work
+                Ice2OceanClient: LO, also adapted 
+        
+        WEBSITES
+            Overview as of May 2015
+                "mappable.azurewebsites.net"" is abbreviated 'mappable'; et cetera
+                Here they are:                
+                    - liveocean.azurewebsites.net is Rob's current instance of LOS
+                         - log in as admin with password pass word == ..ocean.. Kilroy hide this
+                    - yoyodyne.azurewebsites.net is Rob's current instance of the Demo Browser Client
+                    - mappable is the original stable version of liveocean
+                    - liveocean-api is deprecated; old (intermediate) version of the api
+                    - lo-api-test is the most recent Nels instance of LOS
+                    - liveocean is Rob's LOS URL
+                    - yoyodyne is Rob's (temporary) LO URL
+                    - ice2ocean-api is Anthony's LOS > I2OS
+
+        ACTION ITEMS
+        - Group to fix hard coding
+        - Anthony to do his results as daily blocks
+        - Rob to do a toy bounding box call
+            get-value returns whatever the model produces (and this happens be be plaid for Parker)
+            get-values should not work
+            get_depth_slice is the function; in api.py. 
+        - Kilroy
+            Hard coding
+                Can we swap in storage account name as a variable rather than hard coding it? 
+                Nels: Right. Not done yet. And therefore this could be the lo-api-test bug: Pointing to the wrong place via hardcoding. 
+                Rob: If Anthony is fixing this in Ice2Ocean then the fix needs to get into LOS. Let's do that via email to coding. 
+                Nels: storage_account_name and storage_account_key should be referenced in builder.py; it should not say 'Laplace'...
+                Nels: ...Kilroy'd
+            LOS versus LO clobbering
+                When you publish LOS you get a root index (without needing to supply index.html) 
+                In LOS: That's the splash page; Django points to the splash page (no extension) but again this is not index.html. 
+                Thereafter: IIS lets Django route the base URL to the splash page; no problem.
+                Now publish LO: LO copies all the LO files (X.html) to the AWSI indiscriminantly. 
+                    IF they collide in filename LO takes precedence
+                        because of OOO in IIS: 
+                            It sees index.html and runs with that; so LO wins. 
+                There are other potential problems with forced co-existence: 
+                    Has web.config been clobbered? This is defined and is part of the publication
+                    process for LOS and LO. So the LO could clobber the LOS web.config and break things.
+                The Nels way to defeat this is beautiful in its simplicity: Publish LOS to one web site and LO to another. 
+                The other Nels solution is to tackle the problem of virtual directories; then you publish Yoyodyne Clients to the virtual directory
+                    and this allows everything to come out of one base URL. This would require IIS expertise and philosophically Rob does not like it:
+                    It goes against the notion of Yoyodyne being separate from LiveOcean. Of course we'd have a perception problem. Who gets the obvious
+                    URL? How do you make the API URL easy for a Developer to find? And so on.  
+
+        DEEP PLAN
+            Anthony works out kinks in Ice2Ocean
+            LiveOceanServer has the Django installation including the 'app' folder where all the good stuff lives
+                This is Django 1.6.(4 or 5)
+            Ice2Ocean: Ditto
+            We converge these two into a generalization; and now we have created a Value-Add version of Django adaptable to any grid-information setting.
+            Jeff Richey?
+            Flaxen Conway? Built relationships with fishermen on the Oregon Coast who want to use these tools. 
+                Ted Strum: Working with Alexander Kurupov: What these (and folks at Santa Clara) are trying to get to as a Nationwide System
+            So let's keep this thing as a mobile test bed for ROMS systems. NVS not quite the thing. 
+                NVS does not accommodate models; does not support rapid prototyping; not intended to be extensible. 
+                Reason: It is sort of institutional ossification (unable to find Devs; so a bit black box syndrome)
+            Pete Lawson: NOAA: Accumulating catch records: So he wants a LO testbed to correlate to...
+          
+
+        OPERATIONAL TESTING 
+            Parker is sending NetCDF files to Rob's Azure blob storage on a regular basis.
+                To modify this destination: 
+                    - Modify settings.py: 
+                        . Change storage account name, key, container.
+                    - Verify consistency in naming convention conforms to what we expect (also in that block of settings in settings.py)
+                    - Publish Live Ocean Server
+
+        LOS
+            Define AWSI = Azure Web Site Instance; where LOS is installed
+            The AWSI has local storage; like a disk drive.
+            The AWSI can go poof, whereupon it is re-constituted but with its memory gone.
+                - For "where" things can go poof: See fetchds
+            NetCDF files (LOS data source) either exist in AWSI poof-susceptible storage or if not are fetched on request from ABS. 
+            API service activity adds to the ABS response cache. 
+                This ABS cache is never cleared automatically; but this can be done manually. 
+            We do not worry about cache invalidation; but how might this happen?
+                The Views Table can be re-calculated from a new version of NetCDF files, whereby the old pngs might become invalid.
+                Say the Views Table default color map changes; so now pngs become invalid.       
+
+        VIEWS TABLE
+            Kilroy The Views Table is largely un-documented and should be. 
+                - See (to begin with) fieldtable.py in the tools folder
+                - See def poptab in builder.py and the function below that: newRow 
+            Define a Data Resource as the model output. In the case of Live Ocean this is a set of hourly NetCDF files giving
+                Ocean state in a particular volume.
+            The Views Table is a flat Azure table with columns corresponding to View attributes and one row per View.
+                - A View is "something you can get from the Data Resource such as salinity or dissolved oxygen". 
+                - A View can be an image (png) typically projected to a good form for map overlay with an associated color table; 
+                    or (Rob suggests) it can be the data that would be used to create that image.
+            Define a Views Table Native Row as a View that corresponds to information coming natively out of the Data Resource.
+            Define a Views Table Derived Row as something added manually that provides a non-native View.
+                - For example (most commonly) a synthesis: Nitrate + 12 x Chlorophyll 
+            The Admin interface has a button that triggers an automated clobber + re-calculation of the Views Table Native Rows (only) 
+                - This means that a Clears-and-Rebuild will clobber any Derived Rows
+                - Rebuild is done by indicating a particular Data Resource (NetCDF file) to use as an exemplar. 
+                    - The Views Table is then bootstrapped off that file.
+            Define a Views Table Contract as an agreement to populate certain columns in the Views Table for a particular View.
+                - pop_tab creates a dictionary called Properties that comprises a Views Table Contract for Native Rows.
+                    - The conractual columns are: 
+                        - Partition Key, Row Key, Color Max, Color Min, Units, Long Name, Color Map. 
+                - newRow contains the Contract for a Derived Row 
+ 
+        API 
+            A query produces a JSON description of the API response.
+                - This is parameter-order-fixed 
+                - Caveat "-10" and "-10.0" will be distinct (for depthMeters) and therefore redundant.
+            Kilroy: Rob wants a debug procedure for when he thinks a query oughta work and instead it 404s. 
+
+
+    
+
+ ////////////////////
+ //
+ // First things first: Install the current python version
+ //
+ ////////////////////
+
+     -- If you don't have python installed yet (see this and the next section) your Visual Studio Solution for Live Ocean will not load properly
+     -- Python 2.7.8 (default, Jun 30 2014, 16:03:49) [MSC v.1500 32 bit (Intel)] on win32
+            Search python 2.7.8 windows and install (5 minutes)
+     -- Plus some python modules but these will be installed in the "virtual environment" step below
+    
+ ////////////////////
+ //
+ // Second things Second: Install the complete virtual python environment (Publishable to Azure) 
+ //
+ ////////////////////
+
+      -- You will need a virtual environment.
+      -- You must construct your own as 'pre-built' is not an option at this juncture (9/2014).
+
+      To construct your own virtual environment:
+
+            Prereq: 
+                You will need this version of python (go to link and click install): https://www.python.org/ftp/python/2.7.8/python-2.7.8.msi.
+                    (Maybe you did this in the First things first section above.)
+                    This version of the cpython interpreter works reliably with Azure Websites as of (9/2014). 
+                        It also works reliably with cloud services and VM's. 
+                    As you install: Be very "YES DO IT" in your approach but WARNING: the Customize Python 2.7.8 form on the wizard has a red X at the
+                        option to "Add python.exe to Path". Select the pull-down choice "will be installed on local hard drive". Proceed.
+                    Amendment 12/2014: Kilroy was here: The above Path business did not show up in the installation process...  
+                Latest version of Python Tools for your version of Visual Studio. Go to it!
+     
+            A moment of explanation: As we add References to C# projects we add (similar idea) a python runtime environment to VS python Projects as needed.
+              In particular we have the LiveOceanServer Project (notice icon has "PY" in the box) and this will need a virtual environment inside of which
+              will exist the python runtime. So let's do that because it is an easy way of getting python machinery running in Azure. 
+
+            WARNING: When Kilroy instantiated LiveOceanServer the Python virtual environment called 'env (Python 2.7)' appeared in the Solution
+                Exporer with a little yellow WARNING triangle next to it. I right-clicked and selected Remove and then went through the step below, being 
+                careful to stipulate 'env' (not the suggested 'env1') and this installed the python virtual environment without the warning triangle. I
+                did the same thing under LiveOceanCacheMonitor because there too I found the yellow warning triangle. 
+
+            In the VS python project 'LiveOceanServer' right click on the Python Environments section and select "Add Virtual Enviroment". 
+              Follow along with the wizard: env, python 2.7, box checked. This installs some 'easy to do' dependencies. 
+            
+            Right click on the environment you have created "env (Python 2.7)". Select 'Open Command Prompt Here...'. 
+
+            At the prompt type:
+
+                > Scripts\activate
+
+            Another moment of explanation: Notice in your command console that the prompt now starts with (env) if you are in good shape. From now on 
+              when you install packages (python utilities / libraries like NumPy or SciPy) they will be installed within this virtual environment, NOT
+              in your global python environment. So this is very much a sandbox. What we have done here is make the python virtual environment Active.
+
+            Go ahead and make sure the other Project(s) have the python virtual environment; for example LiveOceanCacheMonitor. Make sure to do the
+                above step with 'Scripts\activate' to activate that virtual environment. 
+
+            Explanation: Publishing. You will be "Building" the LiveOceanServer Project and then you Publish it to Azure. When you do so
+                your python virtual environment must be activated. This paragraph explains what to do when you *try* to publish but receive
+                an error message that says you must have an active python virtual environment. Even if you have already installed per the above
+                instructions it can become inactive. Notice when it is active: Under Python Environments it is boldface. It is in normal type
+                when it is inactive. To activate: Right click on Python Environments under LiveOceanServer and select View All Python 
+                Environments. There will be an entry for your installed virtual environment like 'env (Python 2.7)' and there should be an
+                'Activate' button. So just click that and your python virtual environment should be boldface, active; and now LiveOceanServer
+                can be published. 
+
+            Now fetch each binary installer individually from the list below from this website: http://www.lfd.uci.edu/~gohlke/pythonlibs/,
+                We have two installers to use: 'pip' and 'easy_install'. 
+                Notice these are (should be) both available in the Scripts sub-directory of your env folder
+              with the notable exception of pyproj. Here are some specific instructions for installing pyproj
+                 - We will unblock the installer file only if the Windows firewall is preventing you from running it
+                 - You can try and skip this to the next session and see if you are obstructed; then come back and try this
+                 - Cut and paste this URL into a browser: https://code.google.com/p/pyproj/downloads/detail?name=pyproj-1.9.3.win32-py2.7.exe&can=2&q=
+                 - Save the install file (do not run it) to the env (Python 2.7) virtual environment folder
+                 - Go to that folder, right click on the install file: Properties
+                        - Click "Unblock" so it is greyed out, then Apply, Ok
+                 - You can proceed with the other python packages given below now; unlike pyproj they should not need that "Unblock" step
+
+            Packages Required (including pyproj described above)
+                * python-dateutil          better datetime support than default
+                * six                      a dependency; not needed directly (gridded data)
+                * tornado                  a dependency; not needed directly (gridded data)
+                * pandas                   a dependency; not needed directly (gridded data)
+                * Numpy                    matrix operations against gridded data (and more)
+                * Scipy                    a dependency; not needed directly
+                * NetCDF4                  provides access to content of NetCDF files
+                * matplotlib               makes pngs from data (and many other things)
+                * pyproj                   bing maps projection
+
+            There will be options for several versions of python for each package. Make sure you get the one specifically for python 2.7 and win32.
+              This is because we are using this on Azure in a machine that is 32 bit. We could in fact use a 64 bit machine in Azure; the important thing
+              is that the python version matches what-bits-we-use machine in Azure. 
+
+            Move each of the binary (*.exe) files you've just grabbed into the virtual enviroment folder. 
+                The environment is virtual; the folder is real. 
+                To locate that folder look at the command prompt in the window that appears when you right click and 
+                select Open Command Prompt Here from the virtual environment. 
+                At that command prompt type these commands:
+
+                (env) ... > easy_install python-dateutil-2.2.win32-py2.7.exe
+                (env) ... > easy_install six-1.7.3.win32-py2.7.exe
+                (env) ... > easy_install tornado-4.0.1.win32-py2.7.exe
+                (env) ... > easy_install pandas-0.14.1.win32-py2.7.exe
+                (env) ... > easy_install numpy-MKL-1.8.2.win32-py2.7.exe
+                (env) ... > easy_install scipy-0.14.0.win32-py2.7.exe
+                (env) ... > easy_install netCDF4-1.1.1.win32-py2.7.exe
+                (env) ... > easy_install matplotlib-1.4.0.win32-py2.7.exe
+                (env) ... > easy_install pyproj-1.9.3.win32-py2.7.exe
+
+            Now your virtual enviroment should now be set up for running LiveOceanServer. To check: in Visual Studio hit "Play" (green triangle where it says
+              Internet Explorer): It will use a browser to show you the server on your localhost and a default Client so you can see what it is doing.
+
+            Anecdotal: Rob on 9/5/2014 run-through had to install Scipy a second time; first time through the launch failed.
+
+            Pyproj installation "version 2" for when version 1 (above) does not work
+            Potential Pitfall: Pyproj has in various instances failed to properly install -- even with easy_install and an administrative console.
+              If this happens... 
+              
+              One tack that seems to work reliably is to install it in the global site packages folder.
+
+              Do not invoke Scripts\activate in the console, 
+              Navigate to the location of the pyproj-1.9.3.win32-py2.7.exe executable
+              
+              ... > easy_install pyproj-1.9.3.win32-py2.7.exe
+
+              Now, in your python 2.7 installation directory locate the folder: Libs\site-packages\pyproj-1.9.3-py2.7-win32.egg
+              Copy the entire directory.
+              In VS right click the virtual environment you intend to use (env) and select Open Folder in File Explorer.
+              Navigate to from the root directory of the virtual enviroment to Lib\site-packages and paste the copied directory.
+              Finally, in the same directory locate a file called easy_install.pth
+              Open this file in the text editor of your choice.
+              
+              You will see something like this:
+
+                    import sys; sys.__plen = len(sys.path)
+                    ./numpy-1.8.2-py2.7-win32.egg
+                    ./netcdf4-1.1.0-py2.7-win32.egg
+                    ./pandas-0.14.1-py2.7-win32.egg
+                    ./scipy-0.14.0-py2.7-win32.egg
+                    ./matplotlib-1.3.1-py2.7-win32.egg
+                    ./pyparsing-2.0.2-py2.7-win32.egg
+                    ./tornado-4.0.1-py2.7-win32.egg
+                    ./backports.ssl_match_hostname-3.4.0.2-py2.7.egg
+                    ./certifi-14.05.14-py2.7.egg
+                    import sys; new=sys.path[sys.__plen:]; del sys.path[sys.__plen:]; p=getattr(sys,'__egginsert',0); sys.path[p:p]=new; sys.__egginsert = p+len(new)
+
+              Add './pyproj-1.9.3-py2.7-win32.egg' on a new line before the final 'import ...'
+              Save this file and restart VS.
+              
+              Pyproj should now appear in the list of installed packages in the virtual enviroment.
+
+
+ ////////////////////
+ //
+ // Third Things Third: Test LOS on Localhost
+ //
+ ////////////////////
+
+            In VS set LiveOceanServer as the default project
+            The >Start button now reads >Internet Explorer. Click this.
+            IE should start with http://localhost:XXXXX (changes each time you run)
+            You should see the LiveOcean splash screen
+            Add /admin to the URL and log in to Django administration using admin and the password, whatever that is 
+
+
+ ////////////////////
+ //
+ // Fourth Things Fourth: Create a new LOS Super User Admin
+ //
+ ////////////////////
+
+            In VS look at the LiveOceanServer Solution: Here you will find the LiveOceanServer Project.
+            Within this Project is (unless you are starting fresh) a file called db.sqlite3. 
+            This file contains super user information and other Django configuration info
+            You can delete it and regenerate it as needed; but you do need it to exist to do Django administration.
+            Stop the instance running. 
+            Open the LiveOceanServer Project folder in Windows Explorer and BE SURE THAT THE FILE IS GONE.
+            In VS: Right click on LiveOceanServer (Project), select Python, select Django Synch DB
+            In the Django Management Console that appears you reply Yes to the prompt to create a new super user.
+            Create the super user noting the name and password.
+            This db.sqlite3 file is specific to your local copy of LiveOceanServer; it is not checked in.
+            If you check it in you clobber the previous version; so don't do that. This deservers a sub-comment on how repositories work.
+
+            If you search on "password" you will hit this line where I remind you (myself) that the initial admin account
+              has a very obvious account name and it has a password that has something to do with the ..ocean..
+
+            Repository note; a point of potential confusion
+              The repository had a copy of db.sqlite3; so that is established as part of the Solution.
+              I got a local copy that I see in VS. 
+              I deleted my local copy of db.sqlite3. This made no change to the repository.
+              I created a new db.sqlite3. This has not yet been added to the Solution. It is a file without portfolio.
+              I may publish my solution to Azure; in which case the db.sqlite3 file goes along and will behave properly: The new super user is present.
+                This implies that when you click Publish it is the folder contents that are copied to Azure; not moderated by what is in the VS Project.
+              I may Check In my code to the repository. This will blow away the Repository copy of db.sqlite3 (because I blew it away locally)...
+              ...however! And this is the sinister part: Because I did not add db.sqlite3 to the Solution (the Project) it will not be in the Repository.
+              (Notice that after it was created it shows up in the LiveOceanServer Project folder but not in VS Solution Explorer.)
+              If I first right-click LiveOceanServer and Add... new file = db.sqlite3: Now there is a new file that is part of the solution; so a Check In
+                will copy that into the Repository.
+              Note: python tools for visual studio is still under active development; so the behavior of Django components may change w/r/t version control
+                over time. Shifting sands.
+            
+            Publishing note: File path length error.
+              This problem is a Windows API limit issue: http://msdn.microsoft.com/en-us/library/aa365247(VS.85).aspx#maxpath
+              If Publish fails because of a "file length too long" error you may relocate your source tree to a shorter full path.
+              We created C:\\Src and put everything there using the Workspaces... control in Visual Studio Source Control Explorer.
+              Note that if you do this there is some "copy rigamarole" necessary to transplant the Python Virtual Environment and 
+              the db.sqlite3 admin file discussed above over to the new location. As follows: 
+                1. DO NOT BLOW AWAY YOUR ORIGINAL COPY OF LIVEOCEANECOSYSTEM; otherwise you've lost your virtual environment.
+                2. Use Windows File Explorer to locate your original LiveOceanServer project folder and Copy the env sub-folder.
+                3. Navigate to your new instance of LiveOceanServer and paste the env folder there.
+                4. Do likewise with db.sqlite3
+
+
+ ////////////////////
+ //
+ // Fifth things Fifth: Install LOS on Azure 
+ //
+ ////////////////////                
+
+            In VS right click on the LiveOceanServer Project and select Publish. 
+            Here you follow the Wizard; and the key step is Preview. This is the set of litmus tests for whether 
+            the publication will work. The dry run happens on your machine; and if successful it will list all the 
+            files that will be sent to Azure. You then click "Publish".
+
+            One possible problem in publishing to Azure is trying to publish without a password. I didn't save the 
+            authentication profile; so one must back up in the Publish wizard to that step, doing it again, and again
+            checking that the authentication works. Then return to the Publish page of the wizard and proceed. 
+
+            If the admin pages do not appear to be working... (Kilroy)
+
+
+
+
+ ////////////////////
+ //
+ // Sixth Things Sixth: Install LO, Yoyodyne's Clients (energetic and otherwise)
+ //
+ ////////////////////
+
+
+            Create (at the Azure control panel: For this website: In the Configure: A new virtual directory. I used 'map' at 'site\clients'.) 
+            Next to this virtual directory tick the Applicaton box. Save it.
+            In VS in the Yoyodyne Clients folder open the LiveOcean solution. Find LiveOceanClient, right click, and Publish it. Welcome to the Wizard.
+            In the Wizard "back up" using < Prev button to the very beginning. Select the Windows Azure Web Site as your publish target. Select the correct website.
+            In the Wizard on the connection page: Make the URL correspond to what you chose in step 1 WITH (important) the extension appended to the site name:
+              liveocean/map; not just liveocean. 
+            Validate Connection. 
+            Click through to the Preview page and click Preview. If everything looks fine: Click Publish. Notice that this will get us to
+               ... oops Kilroy ...    
+            
+            
+
+            
+
+    </pre>
+</body>
+</html>
