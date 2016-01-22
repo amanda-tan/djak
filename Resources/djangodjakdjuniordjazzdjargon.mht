@@ -1,9 +1,9 @@
 MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----=_NextPart_01D15510.AF991D20"
+Content-Type: multipart/related; boundary="----=_NextPart_01D15516.A7FBBEF0"
 
 This document is a Single File Web Page, also known as a Web Archive file.  If you are seeing this message, your browser or editor doesn't support Web Archive files.  Please download a browser that supports Web Archive, such as Windows® Internet Explorer®.
 
-------=_NextPart_01D15510.AF991D20
+------=_NextPart_01D15516.A7FBBEF0
 Content-Location: file:///C:/DA4AAA4E/djangodjakdjuniordjazzdjargon.htm
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/html; charset="utf-8"
@@ -63,9 +63,15 @@ style=3D'font-weight:bold'>Overview</span></p>
 <p style=3D'margin:0in;font-family:Calibri;font-size:12.0pt'>This tutorial =
 tracks
 a combination of three pieces of technology (or four if you count the Python
-programming language) into a web-based data service with some other importa=
-nt
-features included along the way.</p>
+programming language) into web-based data services with some other important
+features included along the way. The original motivation is the work of Par=
+ker MacCready
+on the LiveOcean project and, following suit, Anthony Arendt creating Ice2O=
+cean
+from the same template. The latter can be viewed as in-progress work at <a
+href=3D"http://ice2oceans.azurewebsites.net">http://ice2oceans.azurewebsite=
+s.net</a>.
+</p>
 
 <p style=3D'margin:0in;font-family:Calibri;font-size:12.0pt'>&nbsp;</p>
 
@@ -693,6 +699,173 @@ very own djocumentation. </span></p>
 
 <p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt'>&nbsp;</p>
 
+<p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt'>&nbsp;</p>
+
+<p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt'>Now that I have
+created spaces for djunior djazz and djargon I have decided to build them i=
+nto
+the VS Solution 'djak'; so here is the Create for djunior, another Django w=
+eb
+application. Notice I am careful to stipulate Python27, my 32-bit installat=
+ion
+of Python. </p>
+
+<p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt'>&nbsp;</p>
+
+<p style=3D'margin:0in'><img
+src=3D"djangodjakdjuniordjazzdjargon_files/image028.png" width=3D484 height=
+=3D475></p>
+
+<p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt'>&nbsp;</p>
+
+<p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt'>I did the same=
+ for
+djazz and for djargon I'm going to use Bottle (which is a bit simpler than
+Flask and djargon is intended to be a simple website with just some
+djocumentation like djthis.</p>
+
+<p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt'>&nbsp;</p>
+
+<p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt'>Here is the Cr=
+eate
+page for djargon; notice I still choose the Python27 32-bit installation as=
+ my
+source even though this is a step away from Django. Djargon is not a Django=
+ web
+framework Project; it is a Bottle web framework Project. </p>
+
+<p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt'>&nbsp;</p>
+
+<p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt'>Summary of Wor=
+k So
+Far</p>
+
+<p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt'>I have done fi=
+ve
+things inside a Visual Studio Solution and some corresponding things on the
+Azure portal. </p>
+
+<p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt'>&nbsp;</p>
+
+<p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt'>In Visual Stud=
+io</p>
+
+<ol type=3D1 style=3D'margin-left:.375in;direction:ltr;unicode-bidi:embed;
+ margin-top:0in;margin-bottom:0in;font-family:Calibri;font-size:11.0pt;
+ font-weight:normal;font-style:normal'>
+ <li value=3D1 style=3D'margin-top:0;margin-bottom:0;vertical-align:middle'=
+><span
+     style=3D'font-family:Calibri;font-size:11.0pt;font-weight:normal;font-=
+style:
+     normal;font-family:Calibri;font-size:11.0pt'>Created a Django web app
+     called djak. And published it to Azure (see below).</span></li>
+ <li style=3D'margin-top:0;margin-bottom:0;vertical-align:middle'><span
+     style=3D'font-family:Calibri;font-size:11.0pt'>Created a Django web app
+     called djunior.</span></li>
+ <li style=3D'margin-top:0;margin-bottom:0;vertical-align:middle'><span
+     style=3D'font-family:Calibri;font-size:11.0pt'>Created<span
+     style=3D'mso-spacerun:yes'>Â  </span>a Django web app called djazz.</s=
+pan></li>
+ <li style=3D'margin-top:0;margin-bottom:0;vertical-align:middle'><span
+     style=3D'font-family:Calibri;font-size:11.0pt'>Created a Bottle web app
+     called djargon.</span></li>
+ <li style=3D'margin-top:0;margin-bottom:0;vertical-align:middle'><span
+     style=3D'font-family:Calibri;font-size:11.0pt'>Added two resource file=
+s to
+     the solution: A LiveOceanServer notes file and this documentation as an
+     MHTML document (intended to be installed at djargon).</span></li>
+</ol>
+
+<p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt'>&nbsp;</p>
+
+<p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt'>On Azure</p>
+
+<ol type=3D1 style=3D'margin-left:.375in;direction:ltr;unicode-bidi:embed;
+ margin-top:0in;margin-bottom:0in;font-family:Calibri;font-size:11.0pt;
+ font-weight:normal;font-style:normal'>
+ <li value=3D1 style=3D'margin-top:0;margin-bottom:0;vertical-align:middle'=
+><span
+     style=3D'font-family:Calibri;font-size:11.0pt;font-weight:normal;font-=
+style:
+     normal;font-family:Calibri;font-size:11.0pt'>Obtained a subscription a=
+nd
+     logged into the portal using an anonymous browser.</span></li>
+ <li style=3D'margin-top:0;margin-bottom:0;vertical-align:middle'><span
+     style=3D'font-family:Calibri;font-size:11.0pt'>Created a resource group
+     called 'djak'</span></li>
+ <li style=3D'margin-top:0;margin-bottom:0;vertical-align:middle'><span
+     style=3D'font-family:Calibri;font-size:11.0pt'>Created a web applicati=
+on
+     service plan called djak_app_service_plan that can manage multiple web
+     applications.</span></li>
+ <li style=3D'margin-top:0;margin-bottom:0;vertical-align:middle'><span
+     style=3D'font-family:Calibri;font-size:11.0pt'>Created a web app (with=
+ no
+     database yet) called djak (</span><a href=3D"http://djak.azurewebsites=
+.net"><span
+     style=3D'font-family:Calibri;font-size:11.0pt'>http://djak.azurewebsit=
+es.net</span></a><span
+     style=3D'font-family:Calibri;font-size:11.0pt'>)</span></li>
+ <li style=3D'margin-top:0;margin-bottom:0;vertical-align:middle'><span
+     style=3D'font-family:Calibri;font-size:11.0pt'>Created a web app plus =
+MySQL
+     database called djunior. (</span><a href=3D"http://djunior.azurewebsit=
+es.net"><span
+     style=3D'font-family:Calibri;font-size:11.0pt'>http://djunior.azureweb=
+sites.net</span></a><span
+     style=3D'font-family:Calibri;font-size:11.0pt'>)</span></li>
+ <li style=3D'margin-top:0;margin-bottom:0;vertical-align:middle'><span
+     style=3D'font-family:Calibri;font-size:11.0pt'>Created a web app plus =
+MySQL
+     database called djazz (</span><a href=3D"http://djazz.azurewebsites.ne=
+t"><span
+     style=3D'font-family:Calibri;font-size:11.0pt'>http://djazz.azurewebsi=
+tes.net</span></a><span
+     style=3D'font-family:Calibri;font-size:11.0pt'>)</span></li>
+ <li style=3D'margin-top:0;margin-bottom:0;vertical-align:middle'><span
+     style=3D'font-family:Calibri;font-size:11.0pt'>Created a web app (no
+     database) called djargon (</span><a href=3D"http://djargon.azurewebsit=
+es.net"><span
+     style=3D'font-family:Calibri;font-size:11.0pt'>http://djargon.azureweb=
+sites.net</span></a><span
+     style=3D'font-family:Calibri;font-size:11.0pt'>) </span></li>
+ <li style=3D'margin-top:0;margin-bottom:0;vertical-align:middle'><span
+     style=3D'font-family:Calibri;font-size:11.0pt'>Published a rudimentary
+     version of djak to djak from visual studio. </span></li>
+</ol>
+
+<p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt'>&nbsp;</p>
+
+<p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt'>What I have no=
+t done
+-- and this is really important to fix -- is I have not managed to create s=
+uper
+user accounts for the Django instances (djak, djunior and djazz) using the
+'Synch DB' feature. This continues to fail and it is not clear exactly why.=
+ Even
+upon running 'manage.py migrate' from the command line (env) with success t=
+here
+is still no super user for djak; so this is a major kilroy situation.</p>
+
+<p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt'>&nbsp;</p>
+
+<p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt'>Incidentally w=
+hen I
+re-export this documentation from OneNote to its location in the Resources
+folder of the djak Solution I find that Visual Studio notices this and asks=
+ if
+I would like to reload the document into the Solution; so I say yes of cour=
+se;
+and I also regularly commit the entire Solution and Sync to GitHub. </p>
+
+<p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt'>&nbsp;</p>
+
+<p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt'>&nbsp;</p>
+
+<p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt'>&nbsp;</p>
+
+<p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt'>&nbsp;</p>
+
 </div>
 
 </div>
@@ -712,7 +885,7 @@ color:#969696;direction:ltr'>Created with Microsoft OneNote 2013.</p>
 
 </html>
 
-------=_NextPart_01D15510.AF991D20
+------=_NextPart_01D15516.A7FBBEF0
 Content-Location: file:///C:/DA4AAA4E/djangodjakdjuniordjazzdjargon_files/image001.png
 Content-Transfer-Encoding: base64
 Content-Type: image/png
@@ -1547,7 +1720,7 @@ HcjMbMCfdq388ssvEmA9TEhdsB+OEJthKCr29HCngCOEEGIHqOEIsQ3qyxsUmxBCCGlOqOEIaQox
 iG3hmoYr4JoGQgixLVzTQEgzwX44QgghhBDHgxqOEEIIIcTxoIYjhBBCCHE0nJz+B+f9oVCvqmFT
 AAAAAElFTkSuQmCC
 
-------=_NextPart_01D15510.AF991D20
+------=_NextPart_01D15516.A7FBBEF0
 Content-Location: file:///C:/DA4AAA4E/djangodjakdjuniordjazzdjargon_files/image002.png
 Content-Transfer-Encoding: base64
 Content-Type: image/png
@@ -2056,7 +2229,7 @@ qJPeRaYCDoOOU+XygqYN3MRQ5uBa0cuaJaQ3yqrjYCd0KNqf3UfCx/KMJpwf6r/5Fh4jl4/0d5rS
 Rh6sGYaRB2uGYeTBmmEYebBmGEYeqs8BMAyTBfwcAMPIhjXDMPJgzTCMPFgzDCMPYQ5ADDIMky0G
 Bv8P8mt/g6fGVHYAAAAASUVORK5CYIJ=
 
-------=_NextPart_01D15510.AF991D20
+------=_NextPart_01D15516.A7FBBEF0
 Content-Location: file:///C:/DA4AAA4E/djangodjakdjuniordjazzdjargon_files/image003.png
 Content-Transfer-Encoding: base64
 Content-Type: image/png
@@ -2530,7 +2703,7 @@ BOBSsat2ASB/EbsA4BSxCwBOEbsA4BSxCwBOEbsA4BSxCwBOEbsA4BSxCwBOEbsA4JTrXw4GgGKO
 ahcAnCJ2AcApYhcAnCJ2AcApYhcAnCJ2AcApYhcAnCJ2AcApYhcAnCJ2AcApYhcAnCJ2AcApYhcA
 HEpK+v/3wT1fwiBUyAAAAABJRU5ErkJggk==
 
-------=_NextPart_01D15510.AF991D20
+------=_NextPart_01D15516.A7FBBEF0
 Content-Location: file:///C:/DA4AAA4E/djangodjakdjuniordjazzdjargon_files/image004.png
 Content-Transfer-Encoding: base64
 Content-Type: image/png
@@ -2886,7 +3059,7 @@ mx/4QJDD7wtGY0C3Af1XtE8K+jfnjJue0UX0VeEfeElHAAaiETbOGTc/q4sAACCEb3QAAGAiHQEA
 MJGOAACYSEcAAEykIwAAJtIRAAAT6QgAgIl0BADARDoCAGAiHQEAMJGOAACYSEcAAEykIwAAJtIR
 AAAT6QgAgIl0BADARDoCANCWw/H/AVQ9ghqk7n0FAAAAAElFTkSuQmCC
 
-------=_NextPart_01D15510.AF991D20
+------=_NextPart_01D15516.A7FBBEF0
 Content-Location: file:///C:/DA4AAA4E/djangodjakdjuniordjazzdjargon_files/image005.png
 Content-Transfer-Encoding: base64
 Content-Type: image/png
@@ -3125,7 +3298,7 @@ SgPACqA0AKwASgPACqA0AKwASgPACqA0AKwASgPACqA0AKwASgPACqA0AKwASgPACqA0AKwASgPA
 CqA0AKwASgPACqA0AKwASgPACqA0AKwASgPACqA0AKwASgPACqA0AKwASgPACqA0AKwASgMg8ijK
 /wcnxZ1BnRmS7QAAAABJRU5ErkJggk==
 
-------=_NextPart_01D15510.AF991D20
+------=_NextPart_01D15516.A7FBBEF0
 Content-Location: file:///C:/DA4AAA4E/djangodjakdjuniordjazzdjargon_files/image006.png
 Content-Transfer-Encoding: base64
 Content-Type: image/png
@@ -3388,7 +3561,7 @@ UQMvbAzAqar6OYr/HH0rSNxwZ3gFbWZwxt6sL3Z8ffLfv/GVj669svsLGa8MJL0oYBAk1eECJkpY
 EJ+9/cPVY6ILaiEpTOQLSBAESWdAlpgishHEFtRjECQl6U8+ylCPSWFQj0EQJMnxNoqdY5DUw1yP
 iSLnPqP70CAIEgvQ1zKS5KAegyAIgsQKlDEIgiBIbCDk/wO6EKWSQUBy3QAAAABJRU5ErkJggk==
 
-------=_NextPart_01D15510.AF991D20
+------=_NextPart_01D15516.A7FBBEF0
 Content-Location: file:///C:/DA4AAA4E/djangodjakdjuniordjazzdjargon_files/image007.png
 Content-Transfer-Encoding: base64
 Content-Type: image/png
@@ -3647,7 +3820,7 @@ p5zUT9VKy5W2+6t7/vWSWnGxcOHCjIwMtdJyZWVliTtVK3Wh7wEAAOghPQAAAD2kBwAAoIf0AAAA
 AOghPQAAAD2kBwAAoIf0AAAA9JAeAACAHtIDAADQQ3oAAAB6SA8AAEAP6QEAAOghPQAAAD2kBwAA
 oIf0AAAA9JAeAACADsP4/zsEt/M1n7e3AAAAAElFTkSuQmCC
 
-------=_NextPart_01D15510.AF991D20
+------=_NextPart_01D15516.A7FBBEF0
 Content-Location: file:///C:/DA4AAA4E/djangodjakdjuniordjazzdjargon_files/image008.png
 Content-Transfer-Encoding: base64
 Content-Type: image/png
@@ -3831,7 +4004,7 @@ HrIXACA8ZC8AQHjIXgCA8JC9AADhIXsBAMJD9gIAhIfsBQAID9kLABAeshcAIDxkLwBAeMheAIDw
 kL0AAOEhewEAwkP2AgCEh+wFAAgP2QsAEB6yFwAgPGQvAEB4yF4AgPCQvQAA4SF7AQDCQ/YCAISH
 7AUACA/ZCwAQmoqK/w9PHZV8TZ0BFwAAAABJRU5ErkJggk==
 
-------=_NextPart_01D15510.AF991D20
+------=_NextPart_01D15516.A7FBBEF0
 Content-Location: file:///C:/DA4AAA4E/djangodjakdjuniordjazzdjargon_files/image009.png
 Content-Transfer-Encoding: base64
 Content-Type: image/png
@@ -4158,7 +4331,7 @@ D9R9ZP3HaXmKXV9W0xX8Lfy+a0Lbx3VOhVCywvCnAg75WsjNS/3BNeIGgi8R8SbtS/hKrA+fWP+u
 3BWuu+qZb15r/dvRb7x2Wu6GVhj2vW+P/7tr5JbP/tZj42+8Uu8Eq9vxW3sjd9Z/tzd83j72jt4C
 APSRz37mRr2FvpDkGDJkiPz3kCH/DzFL1sWbZo7NAAAAAElFTkSuQmCC
 
-------=_NextPart_01D15510.AF991D20
+------=_NextPart_01D15516.A7FBBEF0
 Content-Location: file:///C:/DA4AAA4E/djangodjakdjuniordjazzdjargon_files/image010.png
 Content-Transfer-Encoding: base64
 Content-Type: image/png
@@ -4186,7 +4359,7 @@ aeDvY00HY30fK5VKZTIZ/Qo+/FoLfZXOVVAVaR0ELKzp4A5f9Eun01BY+C0ounXoibQCBlguhczD
 AQJCZvobAuZkVAVYWAwJLCyGBBYWQwILiyGB/69wapiuuzCSsBhmXLgUMiSwsBgSWFgMCSwshgQW
 FkMCC4shgYXFkMDCYkhgYTEksLAYAoT4B/5N0nnZ/va7AAAAAElFTkSuQmCC
 
-------=_NextPart_01D15510.AF991D20
+------=_NextPart_01D15516.A7FBBEF0
 Content-Location: file:///C:/DA4AAA4E/djangodjakdjuniordjazzdjargon_files/image011.png
 Content-Transfer-Encoding: base64
 Content-Type: image/png
@@ -4411,7 +4584,7 @@ iCgvv/r2HnqJ7hE6I66129EP9cvSuwrNhJkZa+gYvfX2fHGlumezwcW/DwGgc/z7EPz7EAAAhJAQ
 AAAZCQEAkJEQAAAZCQEAkJEQAAAZn3YF0DnxM6DnpPY+7Wq3znVRT0pCAABkzDIBAGQkBABARkIA
 AGQkBABARkIAACSO8/8Bje5xJ7iZ6LcAAAAASUVORK5CYIJ=
 
-------=_NextPart_01D15510.AF991D20
+------=_NextPart_01D15516.A7FBBEF0
 Content-Location: file:///C:/DA4AAA4E/djangodjakdjuniordjazzdjargon_files/image012.png
 Content-Transfer-Encoding: base64
 Content-Type: image/png
@@ -4693,7 +4866,7 @@ AACAJmIEAADQRIwAAACaiBEAAEATMQIAAGgiRgAAAE184BOATxr1SbCQVtcHPlWppavrA5+q1NLV
 gI6wsDBiBAAA0ESMAAAAOuiNAAAAmn744UdiBAAA0BEuqCIAAEBjMKgBAAA0iRRBjAAAADpatQr/
 /39orqe3BwEpAAAAAElFTkSuQmCC
 
-------=_NextPart_01D15510.AF991D20
+------=_NextPart_01D15516.A7FBBEF0
 Content-Location: file:///C:/DA4AAA4E/djangodjakdjuniordjazzdjargon_files/image013.png
 Content-Transfer-Encoding: base64
 Content-Type: image/png
@@ -4740,7 +4913,7 @@ xh47/E9dgeW1sF4Nk88ybzAKXkJwfbVWV+C7eASRZSd2Ikhp2ME7RgQpEWgnIi5oJyIuaCciLmgn
 Ii5oJyIuaCciLmgnIi5oJyIuaCciLmgnIi5oJyIuaCciLmgnIi5oJyIuaCciLmgnIi5oJyIuaCci
 LmgnIi5oJyIuaCciLmgnIi5oJyIuaCciKpL0H1z/a/3eUjY3AAAAAElFTkSuQmCC
 
-------=_NextPart_01D15510.AF991D20
+------=_NextPart_01D15516.A7FBBEF0
 Content-Location: file:///C:/DA4AAA4E/djangodjakdjuniordjazzdjargon_files/image014.png
 Content-Transfer-Encoding: base64
 Content-Type: image/png
@@ -4788,7 +4961,7 @@ q5xKdfQ4IorCmNpqQgNUESlVWPEQTz8PUVdX19jYODc3B2sPmrhz5865c+fENfYWevHixfX19Xfv
 gUjg/2V8eXyRr53IFwqmDEQCBYFIoCAQCRQEIoGCQCRQEIgECgKxQMh/KgnBXJ6+f+cAAAAASUVO
 RK5CYIJ=
 
-------=_NextPart_01D15510.AF991D20
+------=_NextPart_01D15516.A7FBBEF0
 Content-Location: file:///C:/DA4AAA4E/djangodjakdjuniordjazzdjargon_files/image015.png
 Content-Transfer-Encoding: base64
 Content-Type: image/png
@@ -4894,7 +5067,7 @@ ujtj8PrvjK3V2nIV+j8k5GbyXMAI9D0U7H44PRQ07L2Aro9+E8Bxg+5uJH81TJwyX23NkPeOsTCY
 goxabfzEBBizF8DhuCC+luPDrVkbqdEw/fcfPI+cORxOD8CPfjuQwzEE/vOhHA6n56BpApjE4XB6
 NOomgMPh+Amm4WPVn4FzOBx/gD8R4HD8Gm4COBw/RhD+H3u2m180p+z1AAAAAElFTkSuQmCC
 
-------=_NextPart_01D15510.AF991D20
+------=_NextPart_01D15516.A7FBBEF0
 Content-Location: file:///C:/DA4AAA4E/djangodjakdjuniordjazzdjargon_files/image016.png
 Content-Transfer-Encoding: base64
 Content-Type: image/png
@@ -4950,7 +5123,7 @@ gxlBsgQMZgTJEjCYESRLWOFgDraVlpcoV1uQa3VAtTf75nnBiPlL9bym8BaRMnhaMeB0/H/1ZsEA
 BEkzK78zb/ANjE9PjU+feX3kqEE4mcOxr3/qw4aY/2/DEIi9oyQAvcM14JDiribGRIV6sgYgyLKR
 vjS7zLuDhKUV3tMW5r8qcvDQc+xrKJMlBFn9EPJ/zrcqoGxgaZcAAAAASUVORK5CYIJ=
 
-------=_NextPart_01D15510.AF991D20
+------=_NextPart_01D15516.A7FBBEF0
 Content-Location: file:///C:/DA4AAA4E/djangodjakdjuniordjazzdjargon_files/image017.png
 Content-Transfer-Encoding: base64
 Content-Type: image/png
@@ -5049,7 +5222,7 @@ ggetEYIgCBI8aI0QBEGQ4EFrhCAIggQPWiMEQRAkeNAaIQiCIMGD1ghBEAQJHrRGCIIgSPCgNUIQ
 BEGCB60RgiAIEjxojRAEQZDgQWuEIAiCBA9aIwRBECR40BohCIIgQUPI/wPgCMRbHlXcugAAAABJ
 RU5ErkJggk==
 
-------=_NextPart_01D15510.AF991D20
+------=_NextPart_01D15516.A7FBBEF0
 Content-Location: file:///C:/DA4AAA4E/djangodjakdjuniordjazzdjargon_files/image018.png
 Content-Transfer-Encoding: base64
 Content-Type: image/png
@@ -5729,7 +5902,7 @@ bIql8c7RkSJ6AAAAAGcwcwEAAADOIHoAAAAAZxA9AAAAgDOIHgAAAMAZRA8AAADgDKIHAAAAcAbR
 AwAAADiD6AEAAACcQfQAAAAAziB6AAAAAGcQPQAAAIAziB4AAADAGUQPAAAA4AyiBwAAAHBmwsG/
 /h+xCAAAABCTovz/h7cHH9fl2HsAAAAASUVORK5CYIJ=
 
-------=_NextPart_01D15510.AF991D20
+------=_NextPart_01D15516.A7FBBEF0
 Content-Location: file:///C:/DA4AAA4E/djangodjakdjuniordjazzdjargon_files/image019.png
 Content-Transfer-Encoding: base64
 Content-Type: image/png
@@ -5999,7 +6172,7 @@ a+fTeJqP0HuDfhhiHlMY6dzO0gEzEibXXEHJtfobFP1xF7gHMv5SiZaIs77MK2EAAAAAinC/u6wT
 4idytp0sxJe65itcG+MZ2TzbFTwjLam9baPWjxkp5NKbvHpYpgKFjBPffqDq+kot4iyTfLqXZaCQ
 AQAAmN/MSzsZAAAAAMASY17ayQAAAAAAlhSM/X9yOcd2dxqdmgAAAABJRU5ErkJggk==
 
-------=_NextPart_01D15510.AF991D20
+------=_NextPart_01D15516.A7FBBEF0
 Content-Location: file:///C:/DA4AAA4E/djangodjakdjuniordjazzdjargon_files/image020.png
 Content-Transfer-Encoding: base64
 Content-Type: image/png
@@ -6395,7 +6568,7 @@ xM/QtiaEEEL8DtWaEEII8TtUa0IIIcTvUK0JIYQQv1P5WWaEEHJawVlmpAahbU0IIYT4Hao1IYQQ
 4neo1oQQQojfoVoTQgghfodqTQghhPgdqjUhhBDid6jWhBBCiN+hWhNCCCF+h2pNCCGE+B2qNSGE
 EOJ3qNaEEEKI36FaE0IIIX6Hak0IIYT4Hao1IYQQ4m+M+f+ojbOe7cqk4wAAAABJRU5ErkJggk==
 
-------=_NextPart_01D15510.AF991D20
+------=_NextPart_01D15516.A7FBBEF0
 Content-Location: file:///C:/DA4AAA4E/djangodjakdjuniordjazzdjargon_files/image021.png
 Content-Transfer-Encoding: base64
 Content-Type: image/png
@@ -7319,7 +7492,7 @@ Mp/pTF/LniYEUMzQzbiIoaxOZj6u2VFvV0ztoamYdG758XBv03+yJ1QkxJvw3PsIOTH7HDccco9i
 HiX3KGaOj4kpmWMiMmsPdHV1VVRUmJ6IiMyt06dPs5GRP8UFBQVsjIyMsCEikllz8HdJq78iIiIi
 Mo8o/oqIiIjIvJGX9/8QLPrzFYSrPAAAAABJRU5ErkJggk==
 
-------=_NextPart_01D15510.AF991D20
+------=_NextPart_01D15516.A7FBBEF0
 Content-Location: file:///C:/DA4AAA4E/djangodjakdjuniordjazzdjargon_files/image022.png
 Content-Transfer-Encoding: base64
 Content-Type: image/png
@@ -7591,7 +7764,7 @@ KULiEY9fHPocp+8IyRdFrucBdNiII/CP4QjxFb49hxBnoHgI0YTiIUQTiocQTSgeQjSheAjRhOIh
 RBOKhxBNKB5CNMn1CQNCiBf4hAEh+lA8hGhC8RCiCcVDiCZZJgwIIb6Ts3g47UZIjhxtaL7r3OVy
 /T+Z71GPSfsSGgAAAABJRU5ErkJggk==
 
-------=_NextPart_01D15510.AF991D20
+------=_NextPart_01D15516.A7FBBEF0
 Content-Location: file:///C:/DA4AAA4E/djangodjakdjuniordjazzdjargon_files/image023.png
 Content-Transfer-Encoding: base64
 Content-Type: image/png
@@ -7788,7 +7961,7 @@ AOAj2r/MYdEePgUjjBhGGDEtO5IKak8A8BFV7blq1SrXAoB0NXToUNdqvGhn7gDQVjFzBwAfpCcA
 +CA9AcAH6QkAPkhPAPBBegKAD9ITAHyQngDgg/QEAB+kJwD4ID0BwAfpCQA+SE8A8EF6AoAP0hMA
 fJCeAOCD9AQAH6QnAPggPQHAB+kJAD5ITwBovIyM/w/9KYZ4HpKKXQAAAABJRU5ErkJggk==
 
-------=_NextPart_01D15510.AF991D20
+------=_NextPart_01D15516.A7FBBEF0
 Content-Location: file:///C:/DA4AAA4E/djangodjakdjuniordjazzdjargon_files/image024.png
 Content-Transfer-Encoding: base64
 Content-Type: image/png
@@ -8122,7 +8295,7 @@ BP0JHxoEQdCf8KFBEAT9CR8aBEHQn/ChQRAE/QkfGgRB0J/woUEQBP0JHxoEQdCf8KFBEAT9CR8a
 BEHQn/ChQRAE/QkfGgRB0J/woUEQBP0JHxoEQdCf8KFBEAT9CR8aBEHQlx07/j/HTBWnNkSzigAA
 AABJRU5ErkJggk==
 
-------=_NextPart_01D15510.AF991D20
+------=_NextPart_01D15516.A7FBBEF0
 Content-Location: file:///C:/DA4AAA4E/djangodjakdjuniordjazzdjargon_files/image025.png
 Content-Transfer-Encoding: base64
 Content-Type: image/png
@@ -8201,7 +8374,7 @@ yAmgIyeAjpwAOnIC6MgJoCMngI6cADpyAujICaAjJ4COnAA6cgLoyAmgIyeAjpwAOnIC6MgJoCMn
 gI6cADr3nN/8KSFpgsvtNtd9nj7vte7ezkveqz0+T6/5IzB+uRMSkib8H97csO3HeqW2AAAAAElF
 TkSuQmCC
 
-------=_NextPart_01D15510.AF991D20
+------=_NextPart_01D15516.A7FBBEF0
 Content-Location: file:///C:/DA4AAA4E/djangodjakdjuniordjazzdjargon_files/image026.png
 Content-Transfer-Encoding: base64
 Content-Type: image/png
@@ -8647,7 +8820,7 @@ b3/LVZoB1ZkQQgoIEegvvvgiV2kGVGdCCCk4IMpdunTJVZoB1ZkQQmyE6kwIITZCdSaEEBuhOhNC
 iI1QnQkhxEaozoQQYiN+frnq2muv/fnnnyVMCCGkIBnz9T8lQN+ZEELsIyrq/wOOp/IF1Jb9AwAA
 AABJRU5ErkJggk==
 
-------=_NextPart_01D15510.AF991D20
+------=_NextPart_01D15516.A7FBBEF0
 Content-Location: file:///C:/DA4AAA4E/djangodjakdjuniordjazzdjargon_files/image027.png
 Content-Transfer-Encoding: base64
 Content-Type: image/png
@@ -11762,7 +11935,337 @@ Kl68uKOjo0pkhUIRLTDfRVaJrFAoFIqYh6dPnwYGBj558sTV1dUoUigUineGSmSFQqFQKBQKheIF
 QqFQKBQvQCWyQqFQKBQKhULxAuKGhIQYlwqFQqFQKBQKhSJOnP8DPUYLkGSdULcAAAAASUVORK5C
 YIJ=
 
-------=_NextPart_01D15510.AF991D20
+------=_NextPart_01D15516.A7FBBEF0
+Content-Location: file:///C:/DA4AAA4E/djangodjakdjuniordjazzdjargon_files/image028.png
+Content-Transfer-Encoding: base64
+Content-Type: image/png
+
+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
+
+------=_NextPart_01D15516.A7FBBEF0
 Content-Location: file:///C:/DA4AAA4E/djangodjakdjuniordjazzdjargon_files/filelist.xml
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/xml; charset="utf-8"
@@ -11796,6 +12299,7 @@ Content-Type: text/xml; charset="utf-8"
  <o:File HRef=3D"image025.png"/>
  <o:File HRef=3D"image026.png"/>
  <o:File HRef=3D"image027.png"/>
+ <o:File HRef=3D"image028.png"/>
  <o:File HRef=3D"filelist.xml"/>
 </xml>
-------=_NextPart_01D15510.AF991D20--
+------=_NextPart_01D15516.A7FBBEF0--
