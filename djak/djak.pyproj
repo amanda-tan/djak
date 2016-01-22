@@ -6,6 +6,7 @@
     <RootNamespace>djak</RootNamespace>
     <InterpreterId>{1aeba1db-c306-495a-8c8b-ae68ae9b7a3b}</InterpreterId>
     <InterpreterVersion>2.7</InterpreterVersion>
+    <NameOfLastUsedPublishProfile>djak - Web Deploy</NameOfLastUsedPublishProfile>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -52,6 +53,7 @@
     <Folder Include="djak\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="djak - Web Deploy.pubxml" />
     <Content Include="requirements.txt" />
     <Content Include="db.sqlite3" />
     <Content Include="app\static\app\content\bootstrap.css" />
