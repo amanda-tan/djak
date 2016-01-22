@@ -37,8 +37,10 @@
         This software is called Live Ocean Server. It is most readily viewed in Visual Studio, it is written primarily in the python 
         programming language, and it is listening for API traffic that would arrive from the internet (not from Parker's ROMS system). 
 
-        At this point we have established a 24-hour refresh of 3 days of forecast, a transfer of results to the cloud, and a Server (Live 
-        Ocean Server) that is the custodian of that data waiting for API traffic. This begs the question "Where does the API traffic come from?"
+        At this point we have established a 24-hour refresh of 3 days of forecast, a transfer of results to the cloud, and a Server 
+        (Live Ocean Server) that is the custodian of that data waiting for API traffic. This begs the question "Where does the API traffic 
+        come from?"
+        
         If you are like me (Rob, sometimes "Kilroy" (see below)) you think of the web as a land of http web locations or URLs. If I want to
         go to youtube I type in http://youtube.com. And so on. But the observant person will soon notice that there are often many characters
         appended to a URL that seem to refine the experience or modify what is going on; for example https://www.youtube.com/watch?v=npjOSLCR2hE. 
@@ -185,24 +187,30 @@
                 LiveOceanServer is built on the Django framework.
                 Python Environments is an extensive virtual "env (Python 2.7)" Python environment
                     Among others this includes "pyproj" with geospatial projection capabilities for maps
-                    Also 'pip' which is apparently an installer
+                    Also the pip installer
                 
 
         //
         // TACTICS
         //
-        // Everything from here down begins to delve into the complexities and details of operating Live Ocean Server
-        //
 
-        Bear in mind the distinction: "Live Ocean" is a research project at the University of Washington under Parker MacCready and
-          "Live Ocean Server" is a sofware solution that runs either on a PC or in the Azure cloud that behaves as part of a forecast
-          system.
-
-        // Key concepts and open issues
-
-        This section flags "important things we know" and open issues.
-        Admonitions are flagged by !!!ADMONITION!!!
-
+        Terminology reviewed: 
+            Live Ocean: A research project at the University of Washington under Parker MacCready (original inspiration)
+            LiveOceanServer (LOS): An API. More broadly: Cloud middleware to bridge between model runs and (forecast > end user)
+            LiveOcean: A forecast viewer, otherwise known as a browser-based Client of LOS. 
+                Sometimes called 'the Yoyodyne Clients'; Yoyodyne is a fictional company that writes end-user software.
+            Ice2Ocean: A glacier hydrology system branched from the LiveOcean code base.
+            Djak: A test framework following the LOS model; with documentation.
+            Djunior: A second test framework intended to operate in tandem with Djak.
+            Azure: The Microsoft cloud 
+            Bing map: A map control provided by Microsoft; friendly to Developers, used here
+            AWSI = Azure Web Site Instance; where LOS is installed
+                The AWSI has local storage; like a disk drive.
+                The AWSI can go poof, whereupon it is re-constituted but with its memory gone.
+                    - For "where" things can go poof: See fetchds
+            NetCDF files (LOS data source) either exist in AWSI poof-susceptible storage or if not are fetched on request from ABS. 
+            API service activity adds to the ABS response cache. 
+                This ABS cache is never cleared automatically; but this can be done manually. 
 
         AZURE
             The dashboard is at http://manage.windowsazure.com
@@ -224,13 +232,6 @@
             Publishing Solutions
                 - LOS publishes as code that runs on the Server: IIS consults Django on what to do, so to speak
                 - LO publishes as files (not code) that are dealt out by IIS
-
-        SOLUTIONS
-            LOS = Live Ocean Server (the API)
-            LO = LiveOcean (Yoyodyne's collection of Clients)
-            Ice2Ocean is the Ice To Ocean solution containing both:
-                Ice2Ocean: LOS adapted to Anthony's work
-                Ice2OceanClient: LO, also adapted 
         
         WEBSITES
             Overview as of May 2015
@@ -278,14 +279,12 @@
                     URL? How do you make the API URL easy for a Developer to find? And so on.  
 
         DEEP PLAN
-            Anthony works out kinks in Ice2Ocean
             LiveOceanServer has the Django installation including the 'app' folder where all the good stuff lives
                 This is Django 1.6.(4 or 5)
             Ice2Ocean: Ditto
             We converge these two into a generalization; and now we have created a Value-Add version of Django adaptable to any grid-information setting.
-            Jeff Richey?
             Flaxen Conway? Built relationships with fishermen on the Oregon Coast who want to use these tools. 
-                Ted Strum: Working with Alexander Kurupov: What these (and folks at Santa Clara) are trying to get to as a Nationwide System
+            Ted Strum: Working with Alexander Kurupov: What these (and folks at Santa Clara) are trying to get to as a Nationwide System
             So let's keep this thing as a mobile test bed for ROMS systems. NVS not quite the thing. 
                 NVS does not accommodate models; does not support rapid prototyping; not intended to be extensible. 
                 Reason: It is sort of institutional ossification (unable to find Devs; so a bit black box syndrome)
@@ -301,13 +300,6 @@
                     - Publish Live Ocean Server
 
         LOS
-            Define AWSI = Azure Web Site Instance; where LOS is installed
-            The AWSI has local storage; like a disk drive.
-            The AWSI can go poof, whereupon it is re-constituted but with its memory gone.
-                - For "where" things can go poof: See fetchds
-            NetCDF files (LOS data source) either exist in AWSI poof-susceptible storage or if not are fetched on request from ABS. 
-            API service activity adds to the ABS response cache. 
-                This ABS cache is never cleared automatically; but this can be done manually. 
             We do not worry about cache invalidation; but how might this happen?
                 The Views Table can be re-calculated from a new version of NetCDF files, whereby the old pngs might become invalid.
                 Say the Views Table default color map changes; so now pngs become invalid.       
