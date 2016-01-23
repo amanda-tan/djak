@@ -6,6 +6,7 @@
     <RootNamespace>djazz</RootNamespace>
     <InterpreterId>{8da60822-9870-4572-b2ae-dd517c462471}</InterpreterId>
     <InterpreterVersion>2.7</InterpreterVersion>
+    <NameOfLastUsedPublishProfile>djazz - Web Deploy</NameOfLastUsedPublishProfile>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -52,6 +53,7 @@
     <Folder Include="djazz\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="djazz - Web Deploy.pubxml" />
     <Content Include="requirements.txt" />
     <Content Include="db.sqlite3" />
     <Content Include="app\static\app\content\bootstrap.css" />

@@ -20,6 +20,7 @@
     <RootNamespace>djargon</RootNamespace>
     <InterpreterId>{7a97747b-e4e4-45e8-985d-033efeee6ce1}</InterpreterId>
     <InterpreterVersion>2.7</InterpreterVersion>
+    <NameOfLastUsedPublishProfile>djargon - Web Deploy</NameOfLastUsedPublishProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -41,6 +42,7 @@
     <Folder Include="views\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="djargon - Web Deploy.pubxml" />
     <Content Include="requirements.txt" />
     <Content Include="static\content\bootstrap.css" />
     <Content Include="static\content\bootstrap.min.css" />

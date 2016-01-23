@@ -6,6 +6,7 @@
     <RootNamespace>djunior</RootNamespace>
     <InterpreterId>{e13d9501-8580-4709-bf39-0045ee5755b5}</InterpreterId>
     <InterpreterVersion>2.7</InterpreterVersion>
+    <NameOfLastUsedPublishProfile>Djunior - Web Deploy</NameOfLastUsedPublishProfile>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -52,6 +53,7 @@
     <Folder Include="djunior\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Djunior - Web Deploy.pubxml" />
     <Content Include="requirements.txt" />
     <Content Include="db.sqlite3" />
     <Content Include="app\static\app\content\bootstrap.css" />
