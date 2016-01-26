@@ -23,7 +23,7 @@ def contact():
     """Renders the contact page."""
     return dict(
         title='Contact',
-        message='Your contact page.',
+        message='You can contact me at rob 5 at uw dot edu.',
         year=datetime.now().year
     )
 
@@ -33,41 +33,26 @@ def about():
     """Renders the about page."""
     return dict(
         title='About',
-        message='Your application description page.',
+        message='Djargon is all about using Bottle to build out some documentation on Azure.',
         year=datetime.now().year
     )
 
-@route('/doc')
-@view('doc')
-def doc():
-    """Renders the simple doc page."""
-    return dict(
-        title='Doc',
-        message='Simple documentation page.',
-        year=datetime.now().year
-    )
+# This is copycat of '/about' and so on; it doesn't render a static page (which is what I want at the moment)
+# @route('/doc')
+# @view('doc')
+# def doc():
+#     """Renders the simple doc page."""
+#     return dict(
+#         title='Doc',
+#         message='Simple documentation page.',
+#         year=datetime.now().year
+#     )
 
-# The following is supposed to get us an html file.
-#   The first line shows the URL extension: djargon.azurewebsites.net/documentation
-#   The second line points to a view (see view folder; file extension is .tpl ('.template')
-#     It is unclear if this points to the subsequent function. 
-
-
-# The static_file() function is a helper to serve files in a safe and convenient 
-# way (see Static Files). This example is limited to files directly within the 
-# /path/to/your/static/files directory because the <filename> wildcard won’t 
-# match a path with a slash in it.
-@route(’/static/documentation’)
-def server_static(filename):
-return static_file(filename, root=’/path/to/your/static/files’)
-
-
+# kilroy added this @route to bind the method 'kilroy_hardcoded_callback()' 
+#   to the '/documentation' extension; see layout.tpl
 @route('/documentation')
-@view('documentation')
-def documentation():
-    """Renders the extensive documentation page."""
-    return dict(
-        title='Documentation',
-        message='Big documentation page.',
-        year=datetime.now().year
-    )
+def kilroy_hardcoded_callback():
+    return static_file('Djocumentation.pdf', root='./static/pdf/')
+
+# kilroy: documentation.html at ./static/html is the older version; but this was a pain to build out of 
+#   OneNote; took several tedious steps. 

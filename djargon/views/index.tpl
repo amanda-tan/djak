@@ -16,12 +16,12 @@
     </div>
     <div class="col-md-4">
         <h2>Get more libraries</h2>
-        <p>The Python Package Index is a repository of software for the Python programming language.</p>
+        <p>Python Package Index (PyPi).</p>
         <p><a class="btn btn-default" href="https://pypi.python.org/pypi">Python PI... &raquo;</a></p>
     </div>
     <div class="col-md-4">
-        <h2>Microsoft Azure</h2>
-        <p>You can easily publish to Microsoft Azure using Python Tools for Visual Studio. Find out how you can host your application using a free trial today.</p>
-        <p><a class="btn btn-default" href="http://azure.microsoft.com">Azure &raquo;</a></p>
+        <h2>Azure</h2>
+        <p>The Microsoft public cloud.</p>
+        <p><a class="btn btn-default" href="http://azure.microsoft.com">Azure home &raquo;</a></p>
     </div>
 </div>

@@ -1,0 +1,26 @@
+#
+# The following is supposed to get us an html file.
+#   The first line shows the URL extension: djargon.azurewebsites.net/documentation
+#   The second line points to a view (see view folder; file extension is .tpl ('.template')
+#     It is unclear if this points to the subsequent function. 
+#
+#
+# The static_file() function is a helper to serve files in a safe and convenient 
+# way (see Static Files). This example is limited to files directly within the 
+# /path/to/your/static/files directory because the <filename> wildcard won’t 
+# match a path with a slash in it.
+# @route('/static/html/documentation.html')
+# def server_static(documentation):
+#     return static_file(filename, root='C:\\Users\\fatla_000\\Documents\\Visual Studio 2015\\Projects\\djak\\djargon\\static\\html\\')
+#
+#
+# @route('/documentation')
+# @view('documentation')
+# def documentation():
+#     """Renders the extensive documentation page."""
+#     return dict(
+#         title='Documentation',
+#         message='Big documentation page.',
+#         year=datetime.now().year
+#     )
+#

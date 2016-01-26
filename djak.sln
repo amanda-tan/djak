@@ -9,6 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		Resources\djangodjakdjuniordjazzdjargon.mht = Resources\djangodjakdjuniordjazzdjargon.mht
 		Resources\README_from_LOS.html = Resources\README_from_LOS.html
+		scratch.txt = scratch.txt
 	EndProjectSection
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "djunior", "djunior\djunior.pyproj", "{5D611519-A042-4F64-BE60-3DB540706560}"
