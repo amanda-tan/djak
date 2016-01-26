@@ -26,6 +26,7 @@
                     <li><a href="/about">About</a></li>
                     <li><a href="/contact">Contact</a></li>
 					<li><a href="/documentation">Djoc</a></li>
+					<li><a href="/api">API</a></li>
                 </ul>
             </div>
         </div>

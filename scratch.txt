@@ -24,3 +24,6 @@
 #         year=datetime.now().year
 #     )
 #
+
+/command=hydrograph&start=26-08-1964&end=26-08-2016&station=G008&interval=daily
+

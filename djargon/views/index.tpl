@@ -12,7 +12,7 @@
         <p>
             Bottle is the simplest of the Django Flask Bottle triumvirate of web frameworks.
         </p>
-        <p><a class="btn btn-default" href="http://bottlepy.org/docs/dev/index.html">Bottle org &raquo;</a></p>
+        <p><a class="btn btn-default" href="http://bottlepy.org/docs/dev/index.html">Bottle doc &raquo;</a></p>
     </div>
     <div class="col-md-4">
         <h2>Get more libraries</h2>
