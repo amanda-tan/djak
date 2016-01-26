@@ -1,0 +1,511 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML xmlns="http://www.w3.org/TR/REC-html40" xmlns:o = 
+"urn:schemas-microsoft-com:office:office" xmlns:dt = 
+"uuid:C2F41010-65B3-11d1-A29F-00AA00C14882"><HEAD><META content="IE=5.0000" 
+http-equiv="X-UA-Compatible">
+
+<META content=IE=5.0000 http-equiv=X-UA-Compatible>
+<META content=IE=5.0000 http-equiv=X-UA-Compatible>
+<META content="text/html; charset=utf-8" http-equiv=Content-Type>
+<META name=ProgId content=OneNote.File>
+<META name=GENERATOR content="MSHTML 11.00.10586.35"><LINK id=Main-File 
+rel=Main-File href="djangodjakdjuniordjazzdjargon.htm"><LINK rel=File-List 
+href="djangodjakdjuniordjazzdjargon_files/filelist.xml"></HEAD>
+<BODY lang=en-US style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; COLOR: black">
+<DIV style="DIRECTION: ltr">
+<DIV style="WIDTH: 7.584in; MARGIN-TOP: 0in; DIRECTION: ltr; MARGIN-LEFT: 0in">
+<DIV 
+style="WIDTH: 3.571in; MARGIN-TOP: 0in; DIRECTION: ltr; MARGIN-LEFT: 0.021in">
+<P style='FONT-SIZE: 20pt; FONT-FAMILY: "Calibri Light"; MARGIN: 0in'>Document 
+Django to Azure</P></DIV>
+<DIV 
+style="WIDTH: 2.484in; MARGIN-TOP: 0.038in; DIRECTION: ltr; MARGIN-LEFT: 0.021in">
+<P 
+style="FONT-SIZE: 10pt; FONT-FAMILY: Calibri; COLOR: gray; MARGIN: 0in">Thursday, 
+January 21, 2016</P>
+<P style="FONT-SIZE: 10pt; FONT-FAMILY: Calibri; COLOR: gray; MARGIN: 0in">4:26 
+PM</P></DIV>
+<DIV 
+style="WIDTH: 7.584in; MARGIN-TOP: 0.43in; DIRECTION: ltr; MARGIN-LEFT: 0in">
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 12pt; FONT-FAMILY: Calibri; MARGIN: 0in"><SPAN 
+style="FONT-WEIGHT: bold">Overview</SPAN></P>
+<P style="FONT-SIZE: 12pt; FONT-FAMILY: Calibri; MARGIN: 0in">This tutorial 
+tracks a combination of three pieces of technology (or four if you count the 
+Python programming language) into web-based data services with some other 
+important features included along the way. The original motivation is the work 
+of Parker MacCready on the LiveOcean project and, following suit, Anthony Arendt 
+creating Ice2Ocean from the same template. The latter can be viewed as 
+in-progress work at <A 
+href="http://ice2oceans.azurewebsites.net/">http://ice2oceans.azurewebsites.net/</A>. 
+</P>
+<P style="FONT-SIZE: 12pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 12pt; FONT-FAMILY: Calibri; MARGIN: 0in">The tactical 
+objective of this tutorial is to give a circa January 2016 How To for building 
+out a web site under the Django web framework, which is in turn built on the MVC 
+software design philosophy with emphasis on 'separation of concerns'. Briefly 
+this separation into three parts--models, views and controls--is an 
+organizational technique that helps you build complex systems without building 
+correspondingly complex bugs. It's worth knowing about if your programming work 
+goes beyond basic Load-Compute-Save operations on data; and that is particularly 
+the case if you are working in a collaborative and/or web application-focused 
+world. </P>
+<P style="FONT-SIZE: 12pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 12pt; FONT-FAMILY: Calibri; MARGIN: 0in">So we have Django 
+as the starting point, which as a framework helps us get things done quickly and 
+reliably. The next part is the IDE which in this case is Visual Studio (2015 and 
+2013 are current versions; 2015 is what I'm using.) This not only enables us to 
+put together a Django web app but also helps view it (on the development machine 
+(localhost)) and helps debug it. In fact there are two distinct build paradigms 
+in Visual Studio: Debug and Release.<SPAN style="mso-spacerun: yes">&nbsp; 
+</SPAN>Debug may run slower but it will also 'watch itself' better and help us 
+fix problems. So that is our IDE. </P>
+<P style="FONT-SIZE: 12pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 12pt; FONT-FAMILY: Calibri; MARGIN: 0in">The third piece of 
+technology is the Azure cloud platform operated by Microsoft. It includes a 
+web-based portal for creating and configuring resources like web sites; so we 
+can work on the portal to create cloud space for our web application. I try to 
+delineate the jargon (or Djargon) in this manner so we can agree on the terms we 
+use and their meaning. </P>
+<P style="FONT-SIZE: 12pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 12pt; FONT-FAMILY: Calibri; MARGIN: 0in"><SPAN 
+style="FONT-WEIGHT: bold">Conventions</SPAN></P>
+<P style="FONT-SIZE: 12pt; FONT-FAMILY: Calibri; MARGIN: 0in">This documentation 
+uses a few idiosyncratic conventions of mine; so best commit these to 
+memory.</P>
+<UL 
+style="MARGIN-BOTTOM: 0in; unicode-bidi: embed; MARGIN-TOP: 0in; DIRECTION: ltr; MARGIN-LEFT: 0.375in" 
+type=disc>
+  <LI style="MARGIN-BOTTOM: 0px; VERTICAL-ALIGN: middle; MARGIN-TOP: 0px"><SPAN 
+  style="FONT-SIZE: 12pt; FONT-FAMILY: Calibri; FONT-WEIGHT: bold">Dj</SPAN><SPAN 
+  style="FONT-SIZE: 12pt; FONT-FAMILY: Calibri"> is used to give incorrect 
+  spellings for common words entirely for the sake of my own amusement. This 
+  document covers the creation of not One but Four web applications, for 
+  example, which are named respectively: </SPAN>
+  <UL 
+  style="MARGIN-BOTTOM: 0in; unicode-bidi: embed; MARGIN-TOP: 0in; DIRECTION: ltr; MARGIN-LEFT: 0.375in" 
+  type=circle>
+    <LI 
+    style="MARGIN-BOTTOM: 0px; VERTICAL-ALIGN: middle; MARGIN-TOP: 0px"><SPAN 
+    style="FONT-SIZE: 12pt; FONT-FAMILY: Calibri">Djak</SPAN> 
+    <LI 
+    style="MARGIN-BOTTOM: 0px; VERTICAL-ALIGN: middle; MARGIN-TOP: 0px"><SPAN 
+    style="FONT-SIZE: 12pt; FONT-FAMILY: Calibri">Djunior</SPAN> 
+    <LI 
+    style="MARGIN-BOTTOM: 0px; VERTICAL-ALIGN: middle; MARGIN-TOP: 0px"><SPAN 
+    style="FONT-SIZE: 12pt; FONT-FAMILY: Calibri">Djazz</SPAN> 
+    <LI 
+    style="MARGIN-BOTTOM: 0px; VERTICAL-ALIGN: middle; MARGIN-TOP: 0px"><SPAN 
+    style="FONT-SIZE: 12pt; FONT-FAMILY: Calibri">Djargon</SPAN> </LI></UL>
+  <LI style="MARGIN-BOTTOM: 0px; VERTICAL-ALIGN: middle; MARGIN-TOP: 0px"><SPAN 
+  style="FONT-SIZE: 12pt; FONT-FAMILY: Calibri">The all-lowercase name 
+  '</SPAN><SPAN 
+  style="FONT-SIZE: 12pt; FONT-FAMILY: Calibri; FONT-WEIGHT: bold">kilroy</SPAN><SPAN 
+  style="FONT-SIZE: 12pt; FONT-FAMILY: Calibri">' is used to flag places where 
+  the sidewalk ends; where it is unclear what is going on or where errors are 
+  occurring or where problems were found and fixed. Searching on kilroy in my 
+  text (code especially) is a good way to review what I think is missing in the 
+  project. </SPAN>
+  <LI style="MARGIN-BOTTOM: 0px; VERTICAL-ALIGN: middle; MARGIN-TOP: 0px"><SPAN 
+  style="FONT-SIZE: 12pt; FONT-FAMILY: Calibri; FONT-WEIGHT: bold">GOTCHA-N</SPAN><SPAN 
+  style="FONT-SIZE: 12pt; FONT-FAMILY: Calibri"> is a numbering scheme for 
+  particularly vicious traps; things that should be straightforward and easy but 
+  mysteriously fail. N is the N'th GOTCHA but I may fail to adhere very well to 
+  the numbering. The GOTCHA flag is the important part. </SPAN></LI></UL>
+<P style="FONT-SIZE: 12pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 12pt; FONT-FAMILY: Calibri; MARGIN: 0in"><SPAN 
+style="FONT-WEIGHT: bold; FONT-STYLE: italic">GOTCHA 1</SPAN></P>
+<P style="FONT-SIZE: 12pt; FONT-FAMILY: Calibri; MARGIN: 0in"><SPAN 
+style="FONT-STYLE: italic">Sometimes we wind up with more than one identity and 
+it can be difficult to know "who am I logged in as?" Mysterious even. So my 
+Azure account is under my administrative ID but if I try to log in to the Azure 
+portal by providing that ID: I end up logged in under a different ID. The 
+browser is apparently being overly helpful. The fix: I use in private browsing 
+in which case I am permitted to log in as myself-administrator. Kilroy was 
+here.</SPAN></P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">In the Azure 
+portal (portal.azure.com) I created a 'djak' resource group. I then found Web + 
+Mobile and will add a new Web App that I hope to name 
+djak.azurewebsites.net.</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="MARGIN: 0in"><IMG src="documentation_files/mht979F(1).tmp" width=484 
+height=350></P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">So the portal 
+suggests I create an App Service Plan first; so I do so choosing the Standard 1 
+tier:</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="MARGIN: 0in"><IMG src="documentation_files/mht97A2(1).tmp" width=231 
+height=416></P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">So collapsing all 
+the blades (things that fold out to the right) I hit Create on this 
+configuration: </P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="MARGIN: 0in"><IMG src="documentation_files/mht97B4(1).tmp" width=326 
+height=584></P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">I get a deployment 
+activity page: </P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="MARGIN: 0in"><IMG src="documentation_files/mht97B7(1).tmp" width=348 
+height=367></P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">This runs for five 
+minutes or so. </P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">When it is done I 
+can go to <A 
+href="http://djak.azurewebsites.net/">http://djak.azurewebsites.net/</A> and 
+there is a nice splash page. But that doesn't mean Djak just yet. Let's go back 
+to VS and see how it views my Azure subscription: </P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="MARGIN: 0in"><IMG src="documentation_files/mht97CA(1).tmp" width=291 
+height=402></P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">Yes! Djak is there 
+and ready for me to publish to. How hard will this turn out to be??? I don't 
+know!</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">Right click on the 
+Djak project in Solution Explorer: </P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="MARGIN: 0in"><IMG src="documentation_files/mht97CD(1).tmp" width=492 
+height=190></P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">And sure enough we 
+get the option to go to Azure:</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="MARGIN: 0in"><IMG src="documentation_files/mht97D0(1).tmp" width=501 
+height=394></P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">Now we hit an App 
+Service page that seems to have the right stuff… on the App Service pop-up the 
+Ok is greyed out until I select the djak Web App within the djak folder. So here 
+we go: </P>
+<P style="MARGIN: 0in"><IMG src="documentation_files/mht97E3(1).tmp" width=575 
+height=360></P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">Notice that this 
+dialog also has a New… button which is the Visual Studio way of allocating new 
+resources in Azure; but I'm skipping this here and just running with the web app 
+as shown.</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">From here we get 
+some "automatic population" of the subsequent form: </P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="MARGIN: 0in"><IMG src="documentation_files/mht97E6(1).tmp" width=516 
+height=410></P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">Going forward my 
+only concern is that I have not designated a super user (which was, I believe, 
+supposed to be happening in the DB Synch step… hmmm….)</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">I click Validate 
+Connection and in a few seconds: </P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="MARGIN: 0in"><IMG src="documentation_files/mht97F8(1).tmp" width=200 
+height=45></P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">Notice that at 
+upper left there are four steps here: Profile, Connection, Settings and Preview. 
+To be thorough we should step through all of them using the Next&gt; button at 
+lower right… but in principle one might cut to the chase by clicking 
+Publish.</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">Interestingly on 
+the Settings page we find 'No databases found in the project' and that's 
+probably not good; so To Be Fixed. But let's keep rolling with Next&gt; 
+Incidentally I am fine with a Release (rather than a Debug) Configuration; but 
+Debug is worth coming back to.</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="MARGIN: 0in"><IMG src="documentation_files/mht981A(1).tmp" width=523 
+height=547></P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">Now here we are on 
+the Preview page: </P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="MARGIN: 0in"><IMG src="documentation_files/mht981D(1).tmp" width=706 
+height=556></P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">So let's go slow 
+and Start Preview…</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">This gives a 
+little 'busy' message: </P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="MARGIN: 0in"><IMG src="documentation_files/mht9820(1).tmp" width=223 
+height=76></P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">And I believe this 
+means that it is differencing the existing web site content (what we 
+automatically got from the Azure portal) and what we are trying to push up to 
+that site. Did the Preview work? No: </P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="MARGIN: 0in"><IMG src="documentation_files/mht9833(1).tmp" width=176 
+height=71></P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">The details are: 
+</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">The "exists" 
+function only accepts a scalar value, but its argument 
+"@(_MSDeploySourceManifest-&gt;'%(RootDir)%(Directory)')" evaluates to 
+"C:\Users\fatla_000\Documents\Visual Studio 
+2015\Projects\djak\djak\obj\Release\Package\;C:\Users\fatla_000\Documents\Visual 
+Studio 2015\Projects\djak\djak\obj\Release\Package\" which is not a scalar 
+value.</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">Notice that above 
+I said 'Release' version but I have clearly only built the Debug version. So 
+let's rebuild as Release in Visual Studio and try this again!</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="MARGIN: 0in"><IMG src="documentation_files/mht9836(1).tmp" width=342 
+height=82></P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="MARGIN: 0in"><IMG src="documentation_files/mht9849(1).tmp" width=324 
+height=59></P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="MARGIN: 0in"><IMG src="documentation_files/mht984C(1).tmp" width=559 
+height=69></P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">And now try 
+Publish again… and sure enough this time we're ok with a lot of updates to make: 
+</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="MARGIN: 0in"><IMG src="documentation_files/mht985E(1).tmp" width=703 
+height=557></P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">Hmmm… I wonder if 
+the database not there thing happens again now that I have the correct build 
+(Release, not Debug)</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">Nope; still no 
+database. But I hit Publish and we are off to the races: </P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="MARGIN: 0in"><IMG src="documentation_files/mht9861(1).tmp" width=716 
+height=135></P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">Ok… great. Go get 
+some coffee. Since this has worked so nicely I decide that I want to go and grab 
+the other three URLs for my other three websites: Multo pronto. Here are there 
+intended purposes: </P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<UL 
+style="MARGIN-BOTTOM: 0in; unicode-bidi: embed; MARGIN-TOP: 0in; DIRECTION: ltr; MARGIN-LEFT: 0.375in" 
+type=disc>
+  <LI style="MARGIN-BOTTOM: 0px; VERTICAL-ALIGN: middle; MARGIN-TOP: 0px"><SPAN 
+  style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri">Djak is supposed to be a 
+  functional recreation of the LiveOcean functionality and will be built out to 
+  include a CDN fast-data-delivery component.</SPAN> 
+  <LI style="MARGIN-BOTTOM: 0px; VERTICAL-ALIGN: middle; MARGIN-TOP: 0px"><SPAN 
+  style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri">Djunior is also a Django 
+  instance that is intended to cooperate with Djak in a web app - to - web app 
+  manner.</SPAN> 
+  <LI style="MARGIN-BOTTOM: 0px; VERTICAL-ALIGN: middle; MARGIN-TOP: 0px"><SPAN 
+  style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri">Djazz is a third website 
+  intended to explore the medium… ok details TBD.</SPAN> 
+  <LI style="MARGIN-BOTTOM: 0px; VERTICAL-ALIGN: middle; MARGIN-TOP: 0px"><SPAN 
+  style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri">Djargon is a documentation 
+  website… maybe I'll build it with Bottle or Flask though.</SPAN> </LI></UL>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">Ok let's put in 
+some screencaps from creating Djazz. This time I'm including a MySQL database. 
+This is still in the djak resource group; so from the Azure portal website: </P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="MARGIN: 0in"><IMG src="documentation_files/mht9874(1).tmp" width=512 
+height=271></P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="MARGIN: 0in"><IMG src="documentation_files/mht9877(1).tmp" width=595 
+height=488></P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">Notice that it 
+wants to put my MySQL database in Brazil for some reason; so I choose West US 
+instead. </P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in"><SPAN 
+style="FONT-WEIGHT: bold; FONT-STYLE: italic">GOTCHA-2</SPAN><SPAN 
+style="FONT-STYLE: italic"> When doing provisioning on the Azure portal plan to 
+take some extra time looking into all the defaults. Do they make sense? Are the 
+resources as co-located as possible? It seems like an obvious thing but this 
+might a be one of the rough edges of the cloud: Obvious things don't just always 
+work that way for now. </SPAN></P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">Under the 
+philosophy of 'we can always upgrade' I'm going to go for a light DB 
+instance:</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="MARGIN: 0in"><IMG src="documentation_files/mht987A(1).tmp" width=194 
+height=346></P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="MARGIN: 0in"><IMG src="documentation_files/mht988D(1).tmp" width=330 
+height=325></P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">I will put this 
+new web app on the djak_app_service_plan; i.e. I am adding to an existing 
+service plan rather than creating a new one. Furthermore before I can Create the 
+new web app I need to sign off on this bit: </P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="MARGIN: 0in"><IMG src="documentation_files/mht9890(1).tmp" width=386 
+height=219></P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">So apparently I 
+should expect some email from SuccessBricks. Such is life. </P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">And off we go…</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="MARGIN: 0in"><IMG src="documentation_files/mht98A2(1).tmp" width=269 
+height=264></P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">And now it exists. 
+Hurray!</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">Let's do Djunior 
+and Djargon before we forget. They will also include minimal MySQL databases. 
+</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">Here is for 
+Djunior: </P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="MARGIN: 0in"><IMG src="documentation_files/mht98A5(1).tmp" width=413 
+height=436></P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">And my only 
+problem here is that I forgot to use lower-case d for djunior. </P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">How much does this 
+cost??? I have no idea. But the trick is to get a monthly billing statement like 
+this one provided by Anthony Arendt: </P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="MARGIN: 0in"><IMG src="documentation_files/mht98B8(1).tmp" width=682 
+height=485></P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">Notice that 
+Anthony left the lights on on his fairly massive D4 VM and paid $456 for the 
+privilege. 62 cents per hour adds up. $18 / day etcetera. So…</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in"><SPAN 
+style="FONT-WEIGHT: bold; FONT-STYLE: italic">GOTCHA-3</SPAN><SPAN 
+style="FONT-STYLE: italic"> Don't let costs creep up on you. Learn how and when 
+to shut down cloud resources. This is a branch topic (kilroy) that deserves its 
+very own djocumentation. </SPAN></P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">Now that I have 
+created spaces for djunior djazz and djargon I have decided to build them into 
+the VS Solution 'djak'; so here is the Create for djunior, another Django web 
+application. Notice I am careful to stipulate Python27, my 32-bit installation 
+of Python. </P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="MARGIN: 0in"><IMG src="documentation_files/mht98BB(1).tmp" width=484 
+height=475></P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">I did the same for 
+djazz and for djargon I'm going to use Bottle (which is a bit simpler than Flask 
+and djargon is intended to be a simple website with just some djocumentation 
+like djthis.</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">Here is the Create 
+page for djargon; notice I still choose the Python27 32-bit installation as my 
+source even though this is a step away from Django. Djargon is not a Django web 
+framework Project; it is a Bottle web framework Project. </P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">Summary of Work So 
+Far</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">I have done five 
+things inside a Visual Studio Solution and some corresponding things on the 
+Azure portal. </P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">In Visual 
+Studio</P>
+<OL 
+style="FONT-SIZE: 11pt; MARGIN-BOTTOM: 0in; FONT-FAMILY: Calibri; unicode-bidi: embed; MARGIN-TOP: 0in; FONT-WEIGHT: normal; DIRECTION: ltr; FONT-STYLE: normal; MARGIN-LEFT: 0.375in" 
+type=1>
+  <LI style="MARGIN-BOTTOM: 0px; VERTICAL-ALIGN: middle; MARGIN-TOP: 0px" 
+  value=1><SPAN 
+  style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; FONT-WEIGHT: normal; FONT-STYLE: normal">Created 
+  a Django web app called djak. And published it to Azure (see below).</SPAN> 
+  <LI style="MARGIN-BOTTOM: 0px; VERTICAL-ALIGN: middle; MARGIN-TOP: 0px"><SPAN 
+  style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri">Created a Django web app called 
+  djunior.</SPAN> 
+  <LI style="MARGIN-BOTTOM: 0px; VERTICAL-ALIGN: middle; MARGIN-TOP: 0px"><SPAN 
+  style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri">Created<SPAN 
+  style="mso-spacerun: yes">&nbsp; </SPAN>a Django web app called djazz.</SPAN> 
+  <LI style="MARGIN-BOTTOM: 0px; VERTICAL-ALIGN: middle; MARGIN-TOP: 0px"><SPAN 
+  style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri">Created a Bottle web app called 
+  djargon.</SPAN> 
+  <LI style="MARGIN-BOTTOM: 0px; VERTICAL-ALIGN: middle; MARGIN-TOP: 0px"><SPAN 
+  style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri">Added two resource files to the 
+  solution: A LiveOceanServer notes file and this documentation as an MHTML 
+  document (intended to be installed at djargon).</SPAN> </LI></OL>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">On Azure</P>
+<OL 
+style="FONT-SIZE: 11pt; MARGIN-BOTTOM: 0in; FONT-FAMILY: Calibri; unicode-bidi: embed; MARGIN-TOP: 0in; FONT-WEIGHT: normal; DIRECTION: ltr; FONT-STYLE: normal; MARGIN-LEFT: 0.375in" 
+type=1>
+  <LI style="MARGIN-BOTTOM: 0px; VERTICAL-ALIGN: middle; MARGIN-TOP: 0px" 
+  value=1><SPAN 
+  style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; FONT-WEIGHT: normal; FONT-STYLE: normal">Obtained 
+  a subscription and logged into the portal using an anonymous browser.</SPAN> 
+  <LI style="MARGIN-BOTTOM: 0px; VERTICAL-ALIGN: middle; MARGIN-TOP: 0px"><SPAN 
+  style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri">Created a resource group called 
+  'djak'</SPAN> 
+  <LI style="MARGIN-BOTTOM: 0px; VERTICAL-ALIGN: middle; MARGIN-TOP: 0px"><SPAN 
+  style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri">Created a web application 
+  service plan called djak_app_service_plan that can manage multiple web 
+  applications.</SPAN> 
+  <LI style="MARGIN-BOTTOM: 0px; VERTICAL-ALIGN: middle; MARGIN-TOP: 0px"><SPAN 
+  style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri">Created a web app (with no 
+  database yet) called djak (</SPAN><A 
+  href="http://djak.azurewebsites.net/"><SPAN 
+  style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri">http://djak.azurewebsites.net</SPAN></A><SPAN 
+  style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri">)</SPAN> 
+  <LI style="MARGIN-BOTTOM: 0px; VERTICAL-ALIGN: middle; MARGIN-TOP: 0px"><SPAN 
+  style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri">Created a web app plus MySQL 
+  database called djunior. (</SPAN><A 
+  href="http://djunior.azurewebsites.net/"><SPAN 
+  style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri">http://djunior.azurewebsites.net</SPAN></A><SPAN 
+  style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri">)</SPAN> 
+  <LI style="MARGIN-BOTTOM: 0px; VERTICAL-ALIGN: middle; MARGIN-TOP: 0px"><SPAN 
+  style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri">Created a web app plus MySQL 
+  database called djazz (</SPAN><A href="http://djazz.azurewebsites.net/"><SPAN 
+  style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri">http://djazz.azurewebsites.net</SPAN></A><SPAN 
+  style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri">)</SPAN> 
+  <LI style="MARGIN-BOTTOM: 0px; VERTICAL-ALIGN: middle; MARGIN-TOP: 0px"><SPAN 
+  style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri">Created a web app (no database) 
+  called djargon (</SPAN><A href="http://djargon.azurewebsites.net/"><SPAN 
+  style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri">http://djargon.azurewebsites.net</SPAN></A><SPAN 
+  style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri">) </SPAN>
+  <LI style="MARGIN-BOTTOM: 0px; VERTICAL-ALIGN: middle; MARGIN-TOP: 0px"><SPAN 
+  style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri">Published a rudimentary version 
+  of djak to djak from visual studio. </SPAN></LI></OL>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">What I have not 
+done -- and this is really important to fix -- is I have not managed to create 
+super user accounts for the Django instances (djak, djunior and djazz) using the 
+'Synch DB' feature. This continues to fail and it is not clear exactly why. Even 
+upon running 'manage.py migrate' from the command line (env) with success there 
+is still no super user for djak; so this is a major kilroy situation.</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">Incidentally when 
+I re-export this documentation from OneNote to its location in the Resources 
+folder of the djak Solution I find that Visual Studio notices this and asks if I 
+would like to reload the document into the Solution; so I say yes of course; and 
+I also regularly commit the entire Solution and Sync to GitHub. </P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P>
+<P 
+style="FONT-SIZE: 11pt; FONT-FAMILY: Calibri; MARGIN: 0in">&nbsp;</P></DIV></DIV></DIV>
+<DIV>
+<P style="MARGIN: 0in">&nbsp;</P>
+<P 
+style="FONT-SIZE: 9pt; FONT-FAMILY: Arial; COLOR: #969696; DIRECTION: ltr; TEXT-ALIGN: left; MARGIN: 0in">Created 
+with Microsoft OneNote 2013.</P></DIV></BODY></HTML>

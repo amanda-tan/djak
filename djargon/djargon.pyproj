@@ -38,6 +38,9 @@
     <Folder Include="static\" />
     <Folder Include="static\content\" />
     <Folder Include="static\fonts\" />
+    <Folder Include="static\html\documentation_files\" />
+    <Folder Include="static\images\" />
+    <Folder Include="static\html\" />
     <Folder Include="static\scripts\" />
     <Folder Include="views\" />
   </ItemGroup>
@@ -51,6 +54,35 @@
     <Content Include="static\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="static\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="static\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="static\html\documentation.html" />
+    <Content Include="static\html\documentation_files\mht979F%281%29.tmp" />
+    <Content Include="static\html\documentation_files\mht97A2%281%29.tmp" />
+    <Content Include="static\html\documentation_files\mht97B4%281%29.tmp" />
+    <Content Include="static\html\documentation_files\mht97B7%281%29.tmp" />
+    <Content Include="static\html\documentation_files\mht97CA%281%29.tmp" />
+    <Content Include="static\html\documentation_files\mht97CD%281%29.tmp" />
+    <Content Include="static\html\documentation_files\mht97D0%281%29.tmp" />
+    <Content Include="static\html\documentation_files\mht97E3%281%29.tmp" />
+    <Content Include="static\html\documentation_files\mht97E6%281%29.tmp" />
+    <Content Include="static\html\documentation_files\mht97F8%281%29.tmp" />
+    <Content Include="static\html\documentation_files\mht981A%281%29.tmp" />
+    <Content Include="static\html\documentation_files\mht981D%281%29.tmp" />
+    <Content Include="static\html\documentation_files\mht9820%281%29.tmp" />
+    <Content Include="static\html\documentation_files\mht9833%281%29.tmp" />
+    <Content Include="static\html\documentation_files\mht9836%281%29.tmp" />
+    <Content Include="static\html\documentation_files\mht9849%281%29.tmp" />
+    <Content Include="static\html\documentation_files\mht984C%281%29.tmp" />
+    <Content Include="static\html\documentation_files\mht985E%281%29.tmp" />
+    <Content Include="static\html\documentation_files\mht9861%281%29.tmp" />
+    <Content Include="static\html\documentation_files\mht9874%281%29.tmp" />
+    <Content Include="static\html\documentation_files\mht9877%281%29.tmp" />
+    <Content Include="static\html\documentation_files\mht987A%281%29.tmp" />
+    <Content Include="static\html\documentation_files\mht988D%281%29.tmp" />
+    <Content Include="static\html\documentation_files\mht9890%281%29.tmp" />
+    <Content Include="static\html\documentation_files\mht98A2%281%29.tmp" />
+    <Content Include="static\html\documentation_files\mht98A5%281%29.tmp" />
+    <Content Include="static\html\documentation_files\mht98B8%281%29.tmp" />
+    <Content Include="static\html\documentation_files\mht98BB%281%29.tmp" />
     <Content Include="static\scripts\bootstrap.js" />
     <Content Include="static\scripts\bootstrap.min.js" />
     <Content Include="static\scripts\jquery-1.10.2.intellisense.js" />
@@ -69,6 +101,7 @@
     <Content Include="views\about.tpl" />
     <Content Include="views\contact.tpl" />
     <Content Include="views\doc.tpl" />
+    <Content Include="views\documentation.tpl" />
     <Content Include="views\index.tpl" />
     <Content Include="views\layout.tpl" />
   </ItemGroup>

@@ -3,7 +3,6 @@
 <h2>{{ title }}.</h2>
 <h3>{{ message }}</h3>
 
-<p>Simple documentation goes here.</p>
+<p>Involved documentation goes here.</p>
 
-<p>Some further remarks.</p>
-
+<p>This is some more remarks.</p>
