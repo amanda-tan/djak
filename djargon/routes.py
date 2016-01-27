@@ -71,15 +71,20 @@ def api_no_args():
 @view('api')
 def api(command):
     """Interprets an API call."""
+    # kilroy debug: return dict(title='API', message=command, year=datetime.now().year)
+
+    failed = 0
+    fubar = command.split('&')
+    thisCmd = 'null'
+
+    #for c in args:
+    #    thisArgPair = c.split('=')
+    #    if thisArgPair[0] == 'command':
+    #        thisCmd = thisArgPair[1]
+    #        break
+
     return dict(title='API', message=command, year=datetime.now().year)
 
-    #failed = 0
-    #args = command.split("&")
-    #thisCmd = 'null'
-    #for c in args:
-    #    if c.split('=')[0] == 'command':
-    #        thisCmd = c.split('=')[1]
-    #        break
     #if thisCmd == 'hydrograph':
     #    goodMsg = str(len(args)) + ' args; '
     #    for i in range(len(args)):
@@ -91,13 +96,9 @@ def api(command):
     #        if thisQual[0] == 'end':      goodMsg += 'end at ' + thisQual[1] + ', '
     #        if thisQual[0] == 'station':  goodMsg += 'station is ' + thisQual[1] + ', '
     #        if thisQual[0] == 'interval': goodMsg += 'interval is ' + thisQual[1] 
-    #else:
-    #    failed = 2
-
-    #if failed > 0:
-    #    return dict(title='API', message='Ooops qualifier parse failed with error = ' + str(failed), year=datetime.now().year)
-    #else:
-    #    return dict(title='API', message=goodMsg, year=datetime.now().year)
+    #else: failed = 2
+    #if failed > 0: return dict(title='API', message='Ooops qualifier parse failed with error = ' + str(failed), year=datetime.now().year)
+    #else: return dict(title='API', message=goodMsg, year=datetime.now().year)
          
 # kilroy: in this case we look for a filename fitting the regular expression *\.png where 
 #   I put hockney.png in the appropriate folder. So url/images/hockney.png or url/image/hockney.png works...
